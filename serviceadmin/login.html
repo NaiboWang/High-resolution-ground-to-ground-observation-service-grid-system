@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template">
+    <meta name="author" content="GeeksLabs">
+    <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
+
+	<script src="../js/jquery-1.11.1.min.js"></script>
+  	<script src="../js/jquery.cookie.js"></script>
+   	<script src="../js/naibowang/getUrlParam.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <title>用户登录</title>
+
+    <!-- Bootstrap CSS -->    
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- bootstrap theme -->
+    <link href="css/bootstrap-theme.css" rel="stylesheet">
+    <!--external css-->
+    <!-- font icon -->
+    <link href="css/elegant-icons-style.css" rel="stylesheet" />
+    <link href="css/font-awesome.css" rel="stylesheet" />
+    <!-- Custom styles -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/index.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<style>
+    a
+    {
+        color:white;
+    }
+</style>
+  <body class="login-img3-body">
+  <div class="header-outline">
+      <a class="home" onclick="setHome()">设为首页</a>
+      <a class="outline" onclick="addFavorite()">加入收藏</a>
+      <a href="#">简体中文</a>
+      |
+      <a href="#">English</a>
+  </div>
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                  </button>
+                  <h4 class="modal-title" id="exampleModalLabel" style="color:black;text-align: center">用户注册</h4>
+              </div>
+              <form onsubmit="return checkfalse()">
+                  <div class="modal-body">
+                      <div class="form-group">
+                          <label for="name" class="control-label">用户名:</label>
+                          <input type="text" id="usname" style="position: absolute;top:-998px"/>
+                          <input type="password" style="position: absolute;top:-999px"/>
+                          <!--上面两行负责屏蔽浏览器的自动填充功能-->
+                          <input type="text" class="form-control" id="name" value="" required>
+                      </div>
+                      <div class="form-group">
+                          <label class="control-label">密码:</label>
+                          <input type="password" minlength="3" maxlength="14" aria-required="true" class="form-control" id="userpass" value="" required placeholder="密码由3-14位的英文字母、数字和特殊字符组成，请使用强度较高的密码">
+                          <!--<td class="validate-tips" colspan="3">-->
+                              <!--<span id="password-error" class="error">-->
+                                  <!--<i class="iconfront" title="提示"></i>-->
+                                  <!--密码由3-14位的英文字母、数字和特殊字符组成，请使用强度较高的密码-->
+                              <!--</span>-->
+                          <!--</td>-->
+                      </div>
+                      <div class="form-group">
+                          <label class="control-label">确认密码:</label>
+                          <input type="password" minlength="3" maxlength="14" class="form-control" id="confirmpass" value="" required placeholder="请再次填写3-14位的密码">
+                      </div>
+                      <div class="form-group">
+                          <label for="name" class="control-label">联系电话:</label>
+                          <input type="number" min="0" class="form-control" id="phone" value="" required>
+                      </div>
+                      <div class="form-group">
+                          <label for="name" class="control-label">电子邮件:</label>
+                          <input type="email" class="form-control" id="email" value="" required placeholder="有效的邮箱格式，如example@163.com" required pattern="^([\w\.\-]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$">
+                      </div>
+                      <div class="form-group"> <label class="control-label">所属行业:</label> <input type="text" class="form-control" required id="industry" value="" placeholder="只能输入汉字、字母或数字" required pattern="[a-zA-Z\d\u4e00-\u9fa5]*"/></div>
+                      <div class="form-group"> <label class="control-label">所属组织：</label>
+                          <select id="organizationId" class="form-control"></select>
+                      </div>
+                      <div class="form-group"> <label class="control-label">所属角色：</label>
+                          <select id="roleId"  class="form-control"><option value="2">普通用户</option><option value="3">服务提供者</option><option value="4">服务提供方管理员</option><option value="5">服务提供方领导</option></select>
+                      </div>
+                  </div>
+                  <div class="modal-footer" style="text-align: center">
+                      <button type="submit" class="btn btn-primary" style="width: 100px">注册</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+  <script>
+      $(function () {
+          $("#register").click(function () {
+              $('#exampleModal').modal({backdrop:'static'});
+          });
+          $.get(server + "/organization/list.do", function (result) {
+              var listItemData = result.data;
+              var st = `<option value='0'>暂无组织</option>`;
+              for (var k = 0; k < listItemData.length; k++) {
+                  st += `<option value="${listItemData[k].id}">${k+1}.${listItemData[k].organizationName}</option>`;
+              }
+              $("#organizationId").html(st);
+          });
+      });
+      function checkfalse() {
+          if($("#userpass").val() != $("#confirmpass").val())
+          {
+              alert("新密码和确认密码不同！");
+              return false;
+          }
+          if (confirm("尊敬的"+$("#name").val() + "，确认要注册吗？")) {
+              var link = server + "/user/register.do";
+              var data = {
+                  username: $("#name").val(),
+                  roleId: parseInt($("#roleId").val()),
+                  organizationId: parseFloat($("#organizationId").val()),
+                  phone:$("#phone").val(),
+                  email: $("#email").val(),
+                  password: $("#userpass").val(),
+                  industry:$("#industry").val()
+              };
+              fetch(link, {
+                  method: "POST",
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  credentials: 'include',
+                  body: JSON.stringify(data)
+              }).then(res => res.text()).then(function (result) {
+                  result = $.parseJSON(result);
+                  if (result.status) {
+                      alert(result.msg);
+                  } else {
+                      alert(result.msg);
+                      history.go(0);//刷新页面
+                  }
+              });
+          }
+          return false;
+      }
+  </script>
+    <div class="container">
+
+      <form class="login-form" onsubmit="return log()">        
+        <div class="login-wrap">
+            <p class="login-img"><i class="icon_lock_alt"></i></p>
+            <div class="input-group">
+              <span class="input-group-addon"><i class="icon_profile"></i></span>
+              <input type="text" class="form-control" placeholder="用户名" autofocus id="userid">
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="icon_key_alt"></i></span>
+                <input type="password" class="form-control" placeholder="密码" id="password">
+            </div>
+<!--
+            <label class="checkbox">
+                <input type="checkbox" value="remember-me"> Remember me
+                <span class="pull-right"> <a href="#"> Forgot Password?</a></span>
+            </label>
+-->
+            <input type="submit" class="btn btn-primary btn-lg btn-block" id="login" value="登录"></input>
+            <!--<button class="btn btn-info btn-lg btn-block" type="submit">Signup</button>-->
+<!--            <div style="padding-top:10px;text-align: right"><a id="register" style="cursor: pointer;color: blue!important;">立即注册</a></div>-->
+        </div>
+      </form>
+<script>
+function log(){
+ var encodedpassword=encodeURIComponent($("#password").val());
+ // alert(encodedpassword);
+ // alert($("#password").val());
+ $.get(server+"/user/login.do?username="+$("#userid").val()+"&password="+encodedpassword, function(result){
+	 if(result.status)
+	 	alert(result.msg);
+	 else{
+		 $.cookie('username', result.data.name,{path:'/'});
+		 $.cookie('roleId', 3,{path:'/'});//记录用户角色,注意第三个参数
+		 window.location.href = "../index.html";//跳回主页
+	 }
+  });
+  return false;
+};
+    function addFavorite(){
+        var url;
+        var title;
+        var ctrl = (navigator.userAgent.toLowerCase()).indexOf('mac') != -1 ? 'Command/Cmd' : 'CTRL';
+
+        //如果url或者title为空，默认为当前页面url和title
+        if(!(url&&title)){
+            url = document.URL;
+            title = document.title;
+        }
+
+        if(document.all){ //IE
+            window.external.AddFavorite(url, title);
+        } else if(window.sidebar){ //火狐
+            window.sidebar.addPanel(title, url, "");
+        }else{ //添加收藏的快捷键
+            alert("加入收藏夹失败\n您可以尝试通过快捷键" + ctrl + "+D");
+        }
+    }
+
+function setHome() {
+    var url;
+
+    if (!url) {
+        url = document.URL;
+    }
+
+    if (document.all) {  //IE
+        document.body.style.behavior = "url(#default#homepage)";
+        document.body.setHomePage(url);
+    }else if (window.sidebar){      //火狐
+        if (window.netscape) {
+            try {
+                window.netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+            }catch (e) {
+                alert("此操作被浏览器拒绝！请在浏览器地址栏输入'about:config'并回车然后将[signed.applets.codebase_principal_support]的值设置为'true',双击即可。");
+            }
+        }
+        var prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
+        prefs.setCharPref("browser.startup.homepage", url);
+    }else {
+        alert("您的浏览器不支持自动设置首页，请使用浏览器菜单手动设置");
+    }
+}
+</script>
+    </div>
+
+
+  </body>
+</html>

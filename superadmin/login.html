@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template">
+    <meta name="author" content="GeeksLabs">
+    <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
+
+	<script src="../js/jquery-1.11.1.min.js"></script>
+  	<script src="../js/jquery.cookie.js"></script>
+   	<script src="../js/naibowang/superUrlParam.js"></script>
+    <title>超级管理员后台登录</title>
+
+    <!-- Bootstrap CSS -->    
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- bootstrap theme -->
+    <link href="css/bootstrap-theme.css" rel="stylesheet">
+    <!--external css-->
+    <!-- font icon -->
+    <link href="css/elegant-icons-style.css" rel="stylesheet" />
+    <link href="css/font-awesome.css" rel="stylesheet" />
+    <!-- Custom styles -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/index.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<style>
+    a
+    {
+        color:white;
+    }
+</style>
+  <body class="login-img3-body">
+  <div class="header-outline">
+      <a class="home" onclick="setHome()">设为首页</a>
+      <a class="outline" onclick="addFavorite()">加入收藏</a>
+      <a href=#">简体中文</a>
+      |
+      <a href="#">English</a>
+  </div>
+    <div class="container">
+
+      <form class="login-form" onsubmit="return log()">        
+        <div class="login-wrap">
+            <p class="login-img"><i class="icon_lock_alt"></i></p>
+            <div class="input-group">
+              <span class="input-group-addon"><i class="icon_profile"></i></span>
+              <input type="text" class="form-control" placeholder="用户名" autofocus id="userid">
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="icon_key_alt"></i></span>
+                <input type="password" class="form-control" placeholder="密码" id="password">
+            </div>
+<!--
+            <label class="checkbox">
+                <input type="checkbox" value="remember-me"> Remember me
+                <span class="pull-right"> <a href="#"> Forgot Password?</a></span>
+            </label>
+-->
+            <input type="submit" class="btn btn-primary btn-lg btn-block" id="login" value="登录"></input>
+<!--            <button class="btn btn-info btn-lg btn-block" type="submit">Signup</button>-->
+        </div>
+      </form>
+<script>
+function log(){
+ var encodedpassword=encodeURIComponent($("#password").val());
+ $.get(server+"/user/manage/login.do?username="+$("#userid").val()+"&password="+encodedpassword, function(result){
+	 if(result.status)
+	 	alert(result.msg);
+	 else{
+		 // $.cookie('susername', result.data.username);
+         $.cookie('username',result.data.name);
+         $.cookie('roleId',1);
+         $.cookie('username',result.data.name,{path:'/'});
+         $.cookie('roleId',1,{path:'/'});
+		 window.location.href = "../index.html";
+	 }
+  });
+  return false;
+};
+function addFavorite(){
+    var url;
+    var title;
+    var ctrl = (navigator.userAgent.toLowerCase()).indexOf('mac') != -1 ? 'Command/Cmd' : 'CTRL';
+
+    //如果url或者title为空，默认为当前页面url和title
+    if(!(url&&title)){
+        url = document.URL;
+        title = document.title;
+    }
+
+    if(document.all){ //IE
+        window.external.AddFavorite(url, title);
+    } else if(window.sidebar){ //火狐
+        window.sidebar.addPanel(title, url, "");
+    }else{ //添加收藏的快捷键
+        alert("加入收藏夹失败\n您可以尝试通过快捷键" + ctrl + "+D");
+    }
+}
+
+function setHome() {
+    var url;
+
+    if (!url) {
+        url = document.URL;
+    }
+
+    if (document.all) {  //IE
+        document.body.style.behavior = "url(#default#homepage)";
+        document.body.setHomePage(url);
+    }else if (window.sidebar){      //火狐
+        if (window.netscape) {
+            try {
+                window.netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+            }catch (e) {
+                alert("此操作被浏览器拒绝！请在浏览器地址栏输入'about:config'并回车然后将[signed.applets.codebase_principal_support]的值设置为'true',双击即可。");
+            }
+        }
+        var prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
+        prefs.setCharPref("browser.startup.homepage", url);
+    }else {
+        alert("您的浏览器不支持自动设置首页，请使用浏览器菜单手动设置");
+    }
+}
+</script>
+    </div>
+
+
+  </body>
+</html>

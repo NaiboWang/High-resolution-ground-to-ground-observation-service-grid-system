@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<!--[if lt IE 9]><html class="ie"><![endif]-->
+<html class="expanded" lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <![endif]-->
+    <title>高分中心</title>
+    <meta name="keywords" content="API Store，app开发，开发者中心，开放平台，开发者，api，数据，sdk，应用开发，app开发，ios开发，andriod开发，android SDK，andriod API，开发者中心，api接口，android SDK 下载，API服务，开发者开放平台，开发者服务平台，开发者服务" />
+    <meta name="description" content="API Store，为开发者提供最全面的API服务，汇集了国内外应用开发所需要的Android API/SDK，IOS SDK，涉及设计开发，运维管理，云服务，app推广，数据服务等多个范畴的服务，旨在向开发者提供最全面，最便捷的API搜索服务。" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <link rel="stylesheet" type="text/css" href="css/base_680b3b8.css"/><link rel="stylesheet" type="text/css" href="css/style_fc1964e.css"/><link rel="stylesheet" type="text/css" href="css/jquery.autocomplete_ea49a9e.css"/><link rel="stylesheet" type="text/css" href="css/header_5bd59f1.css"/><link rel="stylesheet" type="text/css" href="css/style_b98470f.css"/><link rel="stylesheet" type="text/css" href="css/footer_30fe45c.css"/>
+    <link rel="stylesheet" href="css/slider.css">
+</head>
+<body style="min-width: 1280px;opacity: 0.9;background: #F4F4F4;">
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="server.js"></script>
+<script src="js/naibowang/role.js"></script>
+<script src="js/jquery.cookie.js"></script>
+<script src="js/api/utils.js" ></script>
+<script src="js/api/search.js"></script>
+<script src="js/responsiveslides.js"></script>
+<header id="js-header"
+        data-token="45ced6e913ab4e80f388fec35285e189"
+        data-api-key=""
+        data-user-ctime=""
+        data-verify=""
+        data-alert="">
+    <div class="new-index-title" >
+
+        <div style="width:1080px;margin:0 auto" class="pr">
+            <div class="clearfix pr">
+                <div class="topstyle">
+                    <ul id="tips">
+                    </ul>
+                    <ul style="float: right" id="buttons">
+                    </ul>
+                </div>
+                <div class="clearfix"></div>
+                <a class="new-header-logo fl"></a>
+                <div class="new-header-srch fl">
+                    <a href="test.html" target="_blank"><span id="nlp-srch-btn"></span></a><input style="height:15px;border:3px solid #002A56;background-color:#fff" id="header-srch" type="text" class="bul2 fl" placeholder="输入关键词搜索" value="" maxlength="50"/>
+                    <span class="header-srch-type db dn c_999" data-header-type><span>服务</span><i class="ml5 caret caret-down caret-b-9b"></i></span>
+                    <ul class="new-header-dropdown-list header-srch-type-list dn" data-header-type-list>
+                        <li class="header-dropdown-item tc cur-hand active">服务</li>
+                        <li class="header-dropdown-item tc cur-hand ">服务商</li>
+                    </ul>
+                    <span id="header-srch-btn"></span>
+
+                    <ul class="new-header-srch-recommend dn" data-srch-recom>
+                    </ul>
+                </div>
+            </div>
+            <!--搜索候选
+            <div class="hot-recom">
+            <a id="header-srch-0" href="#" target="_blank">海冰预警</a>
+            <a id="header-srch-1" href="#" target="_blank">矿物勘探</a>
+            <a id="header-srch-2" href="#" target="_blank">农作物估产</a>
+            <a id="header-srch-3" href="#" target="_blank">森林资源调查</a>
+            <a id="header-srch-4" href="#" target="_blank">绿潮预警</a>
+            <a id="header-srch-5" href="#" target="_blank">灾害预报检测</a>
+            </div>
+            -->
+        </div>
+    </div>
+</header>
+<section class="pr" style="z-index: 1;">
+
+    <!--[if lt IE 10]>
+    <link href="css/ie_96eb0a7.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+
+
+    <div class="content">
+        <div class="new-index-content">
+            <div class="new-index-content-wrap">
+                <div class="new-content-up-left pr">
+                    <div class="new-product-cla" style="text-overflow: ellipsis;">
+                        <span>服务类别</span>
+                    </div>
+                    <div class="new-product-list" style="text-overflow: ellipsis;">
+                        <ul id="thecategory"></ul>
+
+                    </div>
+                    <script>
+                        //为动态添加的内容绑定事件
+                        $("#thecategory").on("mouseover","li",function(){
+                            $(".new-product-list-li .arrow").hide();
+                            $(".new-product-list-li .pannel-con").hide();
+                            var t = $(this).find(".lable-list").html();
+                            if(t != null&&t.length>2){
+                                $(this).find(".arrow").css("display","inline");
+                                $(this).find(".pannel-con").css("display","block");
+                            }
+                        });
+                        $("#thecategory").on("mouseout","li",function(){
+                            $(this).find(".arrow").css("display","none");
+                            $(this).find(".pannel-con").css("display","none");
+                        });
+                    </script>
+                    <div class="new-product-more">
+                        <a href="category.html" target="_blank">更多&nbsp;>></a>
+                    </div>
+                </div>
+
+                <div class="new-content-up-mid">
+                    <div class="banner"  id="banner">
+                        <ul class="rslides" id="dowebok">
+                            <li><img class="new-pic-style" src="images/03.jpg" alt="" ></li>
+                            <li><img class="new-pic-style" src="images/04.jpg" alt="" ></li>
+                            <li><img class="new-pic-style" src="images/05.jpg" alt="" ></li>
+                        </ul>
+                        <div class="abc"></div>
+                        <script>
+                            $(function() {
+                                $('#dowebok').responsiveSlides({
+                                    pager: true,
+                                    nav: true,
+                                    namespace: 'centered-btns',
+                                });
+                            });
+                        </script>
+
+                    </div>
+
+                    <!--<div class="new-content-up-right-wrap pr">-->
+                    <!--<div class="new-content-up-right pr">-->
+                    <!--<div id="new-service-title">-->
+                    <!--<span>精品服务</span>-->
+                    <!--<div class="new-service-up-disabled"></div>-->
+                    <!--<div class="new-service-up hover-opacity" id="service-previous-button"></div><div class="new-service-down-disabled"></div>-->
+                    <!--<div class="new-service-down hover-opacity" id="service-next-button"></div>-->
+                    <!--<script>-->
+                    <!--//自己添加-->
+                    <!--$(".new-service-up").hide();-->
+                    <!--$("#service-next-button").click(function(){-->
+                    <!---->
+                    <!--$("#lunbo-wrap").animate({left:'-250px'});-->
+                    <!--$(".new-service-up").show();-->
+                    <!--$(".new-service-down").hide();-->
+                    <!---->
+                    <!--});-->
+                    <!--$("#service-previous-button").click(function(){-->
+                    <!--$("#lunbo-wrap").animate({left:'0px'});-->
+                    <!--$(".new-service-up").hide();-->
+                    <!--$(".new-service-down").show();-->
+                    <!--});-->
+                    <!--</script>-->
+                    <!--</div>-->
+                    <!--<div class="left-and-right-border"></div>-->
+                    <!--<div id="lunbo-wrap" data-count-page="12">-->
+                    <!--<div class="new-better-service-wrap fl" id="wrap1"></div>-->
+                    <!--<div class="new-better-service-wrap" id="wrap2"></div>-->
+
+                    <!--</div>-->
+                    <!--<div id="new-ad-font" class="home-activity">-->
+                    <!--<span class="home-activity-text">公告：暂无</span>-->
+                    <!--<div class="dib vam width-left" data-activity>-->
+                    <!--<div id="data-static-home-article-0" class="scroll-activity pr active" data-scroll="0">-->
+                    <!--</div>-->
+                    <!--<div id="data-static-home-article-1" class="scroll-activity pr " data-scroll="1">-->
+                    <!--<a href="#" class="activity-link dib vat text-overflow-fix" target="_blank" title="免费服务接口关闭">免费服务接口关闭</a>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                </div>
+            </div>
+            <div class="release-process-wrap clearfix hover-opacity">
+                <a target="_blank" href="servicewrapper/newAnalysis.html">
+                    <div class="fl"><p>服务包装</p><p>只需四步</p></div>
+                    <ul class="fl" style="width: 89%">
+                        <li class="service-process fl">
+                            <img src="images/step-1_0820c17.png" class="fl" />
+                            <span class="fl">输入包装的url地址</span>
+                            <img src="images/step-next_5e3a18f.png" class="step-next-pic fl" />
+                        </li>
+                        <li class="add-service-info fl">
+                            <img src="images/step-2_6732297.png" class="fl"/>
+                            <span class="fl">选择输出的结果字段</span>
+                            <img src="images/step-next_5e3a18f.png" class="step-next-pic fl" />
+                        </li>
+                        <li class="confirm-relsease fl">
+                            <img src="images/step-3_52cf623.png" class="fl"/>
+                            <span class="fl">测试服务</span>
+                            <img src="images/step-next_5e3a18f.png" class="step-next-pic fl" />
+                        </li>
+                        <li class="service-result fl">
+                            <img src="images/step-4_88b9699.png" class="fl"/>
+                            <span class="fl">包装成功</span>
+                        </li>
+                    </ul>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    //多线程完成ajax请求
+    var worker = new Worker("js/naibowang/index.js");
+    worker.onmessage =function(evt){     //接收worker传过来的数据函数
+        var text = evt.data.split("@split");
+        $("#wrap1").append(text[0]);//右侧列表1
+        $("#wrap2").append(text[1]);//右侧列表2
+        $("#thecategory").append(text[2]);//左侧大小类
+    }
+</script>
+<footer id="js-footer" class="footer">
+    <!--
+    <div class="footer-inner main clearfix">
+    <div class="fl">
+    <dl class="footer-links">
+    <dt class="footer-dt">APIStore</dt>
+    </dl>
+    <div class="clearfix">
+    <dl class="fl footer-links mr20">
+    <dd class="footer-dd"><a class="footer-link" href="#" target="_blank">关于我们</a></dd>
+    <dd class="footer-dd"><a class="footer-link" href="#" target="_blank">加入我们</a></dd>
+    <dd class="footer-dd"><a class="footer-link" href="#" target="_blank">服务条款</a></dd>
+    </dl>
+    <dl class="fl ml15">
+    <dd><a class="footer-link" href="#" target="_blank">友情链接</a></dd>
+    <dd><a class="footer-link" href="#" target="_blank">平台动态</a></dd>
+    <dd><a class="footer-link" href="#" target="_blank">常见问题</a></dd>
+    </dl>
+    </div>
+    </div>
+    <div class="footer-seperator fl"></div>
+    <dl class="fl footer-contact">
+    <dt class="footer-dt">联系我们</dt>
+    <dd class="footer-dd">
+    <span class="c_fff mb10 dib footer-label">商务合作：</span>
+    <span class="dib vam pr cur-hand footer-select">
+    <span id="footer-qq-group" class="dib vam">1438807181（其它合作）</span>
+    </span>
+    </dd>
+    <dd class="footer-dd">
+    <span class="c_fff mb10 dib footer-label">客服邮箱：</span>
+    <a id="footer-email" class="c_fff mb10 dib" href="#">gaofen@zju.edu.cn</a>
+    </dd>
+    <dd class="footer-dd">
+    <span class="c_fff mb10 dib footer-label">交流QQ群：</span>
+    <span class="dib vam pr cur-hand footer-select">
+    <span id="footer-qq-group" class="dib vam">461037085</span>
+    </span>
+    </dd>
+    </dl>
+    <div class="footer-seperator fl"></div>
+    <dl class="fl footer-contact">
+    <dt class="footer-dt">关注我们</dt>
+    <dd class="footer-dd">
+    <span class="c_fff mb10 dib">论坛：</span>
+    <a class="c_fff mb10 dib" href="#" target="_blank">APIStore官方论坛</a>
+    </dd>
+    <dd class="footer-dd">
+    <span class="c_fff mb10 dib">微博：</span>
+    <a class="c_fff mb10 dib" href="#" target="_blank">APIStore官方微博</a>
+    </dd>
+    <dd class="footer-dd">
+    <span class="c_fff mb10 dib">微信：</span>
+    <span class="c_fff mb10 dib">APIStore</span>
+    </dd>
+    </dl>
+    <div class="footer-seperator fl"></div>
+    <dl class="fl footer-qr mt5">
+    <div class="qr-wechat"></div>
+    </dl>
+    </div>
+    -->
+</footer>
+</body>
+</html>

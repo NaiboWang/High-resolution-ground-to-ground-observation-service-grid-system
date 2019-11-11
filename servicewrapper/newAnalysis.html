@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title>网页分析</title>
+    <link href="../css/common.css" type="text/css" rel="stylesheet" />
+    <link href="../css/base_680b3b8.css" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="../css/header_5bd59f1.css"/>
+    <script src="../js/jquery-3.2.1(2).js" ></script>
+    <script src="../js/api/utils.js"></script>
+    <script src="../js/api/search.js"></script>
+    <script src="../js/naibowang/role.js"></script>
+    <script src="../js/jquery.cookie.js"></script>
+    <script src="../js/api/jquery.pagination.js"></script>
+    <script src="js/serviceWrapper.js"></script>
+    <!--bootstrap开始-->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!--bootstrap结束-->
+</head>
+<style>
+    body{
+        font-size: 17px;
+    }
+</style>
+<body class="bg-White" style="min-width: 1280px;opacity: 0.9;background: #F4F4F4;">
+<div class="new-index-title" >
+    <div style="width:1080px;margin:0 auto;" class="pr">
+        <div class="clearfix pr">
+            <div class="topstyle">
+                <ul id="tips">
+                </ul>
+                <ul style="float: right" id="buttons">
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+            <a class="new-header-logo fl" href="index.html"></a>
+
+        </div>
+    </div>
+</div>
+<section class="wrap2" style="width:1031px">
+    <div class="card zl clearfix " style="padding-left: 70px;padding-right: 70px;">
+        <h3 class="title1" >源URL</h3>
+        <form >
+            <div class="form-group" >
+                <label for="exampleInputEmail1" >请输入服务所在的网址</label>
+                <input id="url_text" type="text" style="display: block" class="form-control" id="exampleInputEmail1" value="http://www.ceic.ac.cn/speedsearch?time=7">
+            </div>
+            <div style="display: inline;">
+                <!--<button id="staticWrap" type="button"  class="btn btn-primary">静态包装</button>-->
+                <button id="dynamicWrap" type="button"  class="btn btn-primary" >点击包装</button>
+            </div>
+        </form>
+        <div style="height:40px"></div>
+        <h3 class="title1" id="logs">解析日志</h3>
+
+        <div class="box1" id="logText"
+             style="height: 200px;border: 1px solid #ddd;overflow: scroll" ><p id="logResult" class="text-left"></p></div>
+        <form >
+            <button  id="nextBtn" type="button" style="margin-top: 16px;display: none" class="btn btn-primary" >点击继续</button>
+        </form>
+    </div>
+</section>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>高分中心数据测试</title>
+		<meta name="keywords" content="API数据接口_免费API数据_API数据查找_数据调用">
+		<meta name="description" content="向开发者提供国内外最全的金融数据、电商数据、运营商数据、生活服务数据、应用开发数据、质检数据等接口。">
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+	    <link href="css/common.css" type="text/css" rel="stylesheet" />
+		<link href="css/base_680b3b8.css" type="text/css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/header_5bd59f1.css"/>
+		<script src="server.js"></script>
+		<script src="js/jquery-3.2.1(2).js" ></script>
+		<script src="js/api/utils.js"></script>
+		<script src="js/api/gfTest.js"></script>
+		<script src="js/api/search.js"></script>
+		<script src="js/naibowang/role.js"></script>
+		<script src="js/jquery.cookie.js"></script>
+		<script src="js/api/jquery.pagination.js"></script>
+	</head>
+	<style>
+		body{
+			font-size: 17px;
+		}
+	</style>
+	<body class="bg-White" style="min-width: 1280px;opacity: 0.9;background: #F4F4F4;">
+	<div class="new-index-title" >
+		<div style="width:1080px;margin:0 auto;" class="pr">
+			<div class="clearfix pr">
+				<div class="topstyle">
+					<ul id="tips">
+					</ul>
+					<ul style="float: right" id="buttons">
+					</ul>
+				</div>
+				<div class="clearfix"></div>
+				<a class="new-header-logo fl" href="index.html"></a>
+				<div class="new-header-srch fl">
+					<a href="test.html" target="_blank"><span id="nlp-srch-btn"></span></a><input style="height:15px;border:3px solid #002A56;background-color:#fff" id="header-srch" type="text" class="bul2 fl" placeholder="输入关键词搜索" value="" maxlength="50"/>
+					<span class="header-srch-type db dn c_999" data-header-type><span>服务</span><i class="ml5 caret caret-down caret-b-9b"></i></span>
+					<ul class="new-header-dropdown-list header-srch-type-list dn" data-header-type-list>
+						<li class="header-dropdown-item tc cur-hand active">服务</li>
+						<li class="header-dropdown-item tc cur-hand ">服务商</li>
+					</ul>
+					<span id="header-srch-btn"></span>
+
+					<ul class="new-header-srch-recommend dn" data-srch-recom>
+					</ul>
+				</div>
+			</div>
+			<!--搜索候选
+            <div class="hot-recom">
+            <a id="header-srch-0" href="#" target="_blank">海冰预警</a>
+            <a id="header-srch-1" href="#" target="_blank">矿物勘探</a>
+            <a id="header-srch-2" href="#" target="_blank">农作物估产</a>
+            <a id="header-srch-3" href="#" target="_blank">森林资源调查</a>
+            <a id="header-srch-4" href="#" target="_blank">绿潮预警</a>
+            <a id="header-srch-5" href="#" target="_blank">灾害预报检测</a>
+            </div>
+            -->
+		</div>
+	</div>
+		<section class="wrap">
+			<div class="new-test zl clearfix ">
+				<div class="testLeft fl ">
+					<h3 id="categoryName1" ></h3>
+					<ul id="interface-wrapper">
+						<li><span class="tt">接口：</span>
+							<p class="con">
+								<select class="selMode w375" id="endpointName" name="endpointName"></select>
+							</p>
+						</li>
+					</ul>
+					<h3 class="title1">请求参数</h3>
+					<!--<ul style="display:  block " id="7727" class="endpointData clearfix ">
+						<form id="form-7727" enctype="multipart/form-data" method="post">
+							
+						</form>
+					</ul>-->
+					<!--<ul style="display:  none " id="7853" class="endpointData">
+						<form id="form-7853" enctype="multipart/form-data" method="post">
+							<input type="hidden" id="desUrl" name="desUrl" value="https://way.jd.com/he/freecity">
+							<input type="hidden" id="appkey" name="appkey" value="bbeea861e1703ffa78c66504147dbe48">
+							<input type="hidden" id="targetUrl" name="targetUrl" value="https://way.jd.com/he/freecity">
+							<input type="hidden" name="method" value="GET">
+
+							<li name="queryItem" index="0">
+								<input type="hidden" id="name_0" name="queryUIs[0].queryName" value="city"> <span class="tt" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">city ：</span>
+								<div class="con cl">
+									<p class="fl">
+										<input type="text" class="inputMode" id="value_0" name="queryUIs[0].querySample" value="beijing" condition="Required" onkeyup="changeUrlText('city',this.value);">
+									</p>
+									<div class="help-tip">
+										<a href="#" class="sp-icon" id="help"></a>
+										<div class="caption-item">
+											<p>city可通过城市中英文名称、ID和IP地址进行，例如city=北京，city=beijing，city=CN101010100，city= 60.194.130.1</p>
+											<i class="sp-icon"></i>
+										</div>
+									</div>
+									<input type="hidden" id="condition_0" name="queryUIs[0].queryCondition" value="Required"> 
+								</div>
+							</li>
+						</form>
+					</ul>-->
+					<div class="doDiv">
+						<a id="testBtn" href="javascript:;" class="blueBtn" clstag="pageclick|keycount|index_floor_201708231|35" style="text-decoration: none;" >点击测试</a>
+						<span class="gray">(本次测试免费)</span>
+					</div>
+				</div>
+				<div class="testRight fr">
+					<h3>Request URL<a href="javascript:;" class="copy-icon" id="copy" name="copy"></a></h3>
+					<div class="box1" id="urlText"></div>
+					<h3>Response Body</h3>
+					<div class="box2" ><pre id="testResult"></pre></div>
+				</div>
+			</div>
+		</section>
+		<!--<footer class="g-footer">
+			<div class="wrap ">
+				<dl>
+					<dt class="i51"></dt>
+					<dt>首页</dt>
+					<dd>
+						<a href="javascript:;">平台介绍</a>
+					</dd>
+					<dd>
+						<a href="javascript:;">数据市场</a>
+					</dd>
+					<dd>
+						<a href="javascript:;">商家中心</a>
+					</dd>
+				</dl>
+				<dl>
+					<dt class="i52"></dt>
+					<dt>帮助中心</dt>
+					<dd>
+						<a href="javascript:;">平台介绍</a>
+					</dd>
+					<dd>
+						<a href="javascript:;">数据市场</a>
+					</dd>
+					<dd>
+						<a href="javascript:;">商家中心</a>
+					</dd>
+					<dd>
+						<a href="javascript:;">平台介绍</a>
+					</dd>
+					<dd>
+						<a href="javascript:;">数据市场</a>
+					</dd>
+					<dd>
+						<a href="javascript:;">商家中心</a>
+					</dd>
+				</dl>
+				<dl>
+					<dt class="i53"></dt>
+					<dt>联系我们</dt>
+					<dd>
+						<a href="javascript:;">平台介绍</a>
+					</dd>
+					<dd>
+						<a href="javascript:;">数据市场</a>
+					</dd>
+					<dd>
+						<a href="javascript:;">商家中心</a>
+					</dd>
+				</dl>
+				<div class="erweima">
+					<p>关注官方微信，了解最新资讯</p>
+					<img src="images/wechat_0ebaf26.png" alt="高分中心" />
+				</div>
+			</div>
+		</footer>-->
+	</body>
+</html>

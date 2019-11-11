@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+    <link rel="stylesheet" href="../css/newcss.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template">
+<meta name="author" content="GeeksLabs">
+<meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
+
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script src="../js/jquery.cookie.js"></script>
+<script src="../js/naibowang/getUrlParam.js"></script>
+<title>欢迎使用！</title>
+
+<!-- Bootstrap CSS -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<!-- bootstrap theme -->
+<link href="css/bootstrap-theme.css" rel="stylesheet">
+<!--external css-->
+<!-- font icon -->
+<link href="css/elegant-icons-style.css" rel="stylesheet" />
+<link href="css/font-awesome.min.css" rel="stylesheet" />
+<!-- full calendar css-->
+<link href="assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet" />
+<link href="assets/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet" />
+<!-- easy pie chart-->
+<link href="assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen"/>
+<!-- owl carousel -->
+<link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
+<link href="css/jquery-jvectormap-1.2.2.css" rel="stylesheet">
+<!-- Custom styles -->
+<link rel="stylesheet" href="css/fullcalendar.css">
+<link href="css/widgets.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<link href="css/style-responsive.css" rel="stylesheet" />
+<link href="css/xcharts.min.css" rel=" stylesheet">
+<link href="css/jquery-ui-1.10.4.min.css" rel="stylesheet">
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 -->
+<!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+      <script src="js/lte-ie7.js"></script>
+<![endif]-->
+</head>
+
+<body>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="exampleModalLabel" style="color:black">不通过审核</h4>
+            </div>
+            <form onsubmit="return checkfalse()">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="username" class="control-label">API名称:</label>
+                        <input type="text" class="form-control" id="username" readonly>
+                        <input type="hidden" id="userid">
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="control-label">不通过原因:</label>
+                        <textarea class="form-control" id="message-text" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">提交</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $('#exampleModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var recipient = button.data('whatever') // Extract info from data-* attributes
+        var usid = button.data('usid');
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this);
+        modal.find('#username').val(recipient);
+        modal.find('#userid').val(usid);
+    })
+
+    function checkfalse() {
+        var id = $("#userid").val();
+        var msg = $("#message-text").val();
+        var name = $("#username").val();
+        if (confirm("确认要不通过对：" + name + "API的审核吗？")) {
+            $.get(server + "/api/check.do?isChecked=false&apiId=" + id+"&uncheckedCause="+msg, function (result) {
+                alert(result.msg);
+                if (!result.status) {
+                    $('#exampleModal').modal('hide');
+                    getSList();//刷新列表
+                }
+            });
+        }
+        return false;
+    }
+</script>
+<!-- container section start -->
+<section id="container" class="">
+ <header class="header dark-bg">
+    <div class="toggle-nav">
+      <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"></div>
+    </div>
+    
+    <!--logo start--> 
+    <img class='gflogo' src="../images/api-logo_95fb06f.png"/>
+    <!--logo end-->
+      <!--  search form end --> 
+    </div>
+    <div class="top-nav notification-row"> 
+      <!-- notificatoin dropdown start-->
+      <ul class="nav pull-right top-menu">
+       <li id="usname" style="line-height: 30px"></li>
+        <li>
+          <button class="btn btn-default" id="logout">注销</button>
+        </li>
+        <!-- user login dropdown end -->
+      </ul>
+      <!-- notificatoin dropdown end--> 
+    </div>
+  </header>
+<aside>
+    <div id="sidebar"  class="nav-collapse "> 
+      <!-- sidebar menu start-->
+       <ul class="sidebar-menu">
+        <li class="active"> <a class="" href="index.html"> <i class="icon_house_alt"></i> <span>服务台</span> </a> </li>
+      </ul>
+      <!-- sidebar menu end--> 
+    </div>
+  </aside>
+ 
+  <section id="main-content">
+    <section class="wrapper"> 
+      <!--overview start-->
+      <div class="row">
+        <div class="col-lg-12">
+          <h3 class="page-header"><i class="fa fa-laptop"></i>服务台</h3>
+          <ol class="breadcrumb">
+            <li><i class="fa fa-home"></i><a href="index.html">主页</a></li>
+           <li><i class="fa fa-laptop"></i><a href="index.html" id="serviceplat">服务台</a></li> 
+        	<li><i class="fa fa-book"></i>API管理</li> 
+          </ol>
+        </div>
+        <script>
+		var sid = getUrlParam("pnum");
+		if(sid==null || sid =="")
+			sid="1";
+		$("#serviceplat").attr("href","index.html?pnum="+sid);
+		</script>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <section class="panel">
+            <header class="panel-heading" id="servicename">服务API列表</header>
+            <style>
+					 th,td{text-align: center}
+				 </style>
+            <table class="table table-hover">
+              <thead>
+                <tr id="tabletitle">
+                  <th>ID</th>
+                  <th>API名称</th>
+                  <th>状态</th>
+                  <th colspan="5">操作</th>
+                </tr>
+              </thead>
+              <tbody id="servicelist">
+              </tbody>
+            </table>
+            <div class="form-inline"  style="float: right" >
+              <div class="form-group  form-inline" style="margin: 20px 0"></div>
+            </div>
+            <ul class="pagination form-inline" style="float: right" id="fenye">
+            </ul>
+          </section>
+		<div style="margin-top: 55px" id="reg"><a href="newapi.html?id=" id="newapi" class="btn btn-primary btn-lg" style="text-align: center;display: block;max-width: 130px;margin: 0 auto">增加新API</a></div>
+        </div>
+               <script> 
+				 function getSList()//得到服务列表
+				   {
+					   $("#servicelist").html("");//清空原有列表
+					   checklogin();//登陆检测
+					   var link = server+"/service/search/self.do?serviceId="+getUrlParam("id");
+						$.get(link,function(result){
+							if(result.status)
+					{
+						alert(result.msg);
+						window.location.href="index.html";
+						return;
+					}
+							$("#servicename").html("服务API列表——"+result.data.serviceName);
+							$("#newapi").attr("href","newapi.html?id="+getUrlParam("id"));
+							   var str = "";
+							   if($.cookie('roleId') == 4)//服务管理员
+							   {
+								   	$("#tabletitle").html(`<th>ID</th><th>API名称</th><th>状态</th><th colspan="3">操作</th>`);
+								   $("#reg").html("");//非服务开发者不能增加新服务
+							   }
+							   else if($.cookie('roleId') == 5)
+							   {
+								   $("#tabletitle").html(`<th>ID</th><th>API名称</th><th>状态</th><th>操作</th>`);
+								   $("#reg").html("");//非服务开发者不能增加新服务
+							   }
+							   for(var i = 0;i<result.data.apiInfoList.length;i++)
+							   {
+								   var st = "";//状态
+								   if(result.data.apiInfoList[i].checked == 0)
+								   {
+									   if(result.data.apiInfoList[i].status == 1)
+									   		st = "<td style='color:blue'>正常</td>";
+									   else
+											st = "<td style='color:brown'>已下架</td>";
+								   }
+								   else if(result.data.apiInfoList[i].checked == 1)
+								   {
+                                       st = "<td><span>未审核</span>" + `<a class="example fa fa-question-circle" role="button" data-toggle="popover" data-trigger="manual" title="联系方式" data-content="${result.data.apiInfoList[i].remarks}" style=' font-size:x-large'></a>` + "</td>";
+								   }
+								   else
+								   {
+                                       st = "<td><span style='color: red;'>未通过</span>" + `<a class="example fa fa-question-circle" role="button" data-toggle="popover" data-trigger="manual" title="未通过原因" data-content="${result.data.apiInfoList[i].remarks}" style=' font-size:x-large'></a>` + "</td>";
+								   }
+								   if($.cookie('roleId') == 4)//服务管理员
+							   	   {
+										str+=`<tr><td>${i+1}</td><td><a href="apiinformation.html?sid=${getUrlParam("id")}&id=${result.data.apiInfoList[i].id}">${result.data.apiInfoList[i].name}</a></td>${st}<td><a href="analyse.html?sid=${getUrlParam("id")}&id=${result.data.apiInfoList[i].id}">统计分析</a></td><td><a href="javascript:void(0)" name="${result.data.apiInfoList[i].id}" dataname="${result.data.apiInfoList[i].name}" class="checktrue">通过审核</a></td><td><a href="#" data-usid="${result.data.apiInfoList[i].id}" data-toggle="modal" data-target="#exampleModal" data-whatever="${result.data.apiInfoList[i].name}">不通过审核</a></td></tr>`;
+								   }
+								   else if($.cookie('roleId') == 5)//服务管理员
+								   {
+										str+=`<tr><td>${i+1}</td><td><a href="apiinformation.html?sid=${getUrlParam("id")}&id=${result.data.apiInfoList[i].id}">${result.data.apiInfoList[i].name}</a></td>${st}<td><a href="analyse.html?sid=${getUrlParam("id")}&id=${result.data.apiInfoList[i].id}">统计分析</a></td></tr>`;
+								   }
+								   else//普通开发者
+								   {
+									   str+=`<tr><td>${i+1}</td><td><a href="apiinformation.html?sid=${getUrlParam("id")}&id=${result.data.apiInfoList[i].id}">${result.data.apiInfoList[i].name}</a></td>${st}<td><a href="analyse.html?sid=${getUrlParam("id")}&id=${result.data.apiInfoList[i].id}">统计分析</a></td><td><a href="modifyapi.html?sid=${getUrlParam("id")}&id=${result.data.apiInfoList[i].id}">修改API</a></td><td><a href="javascript:void(0)" name="${result.data.apiInfoList[i].id}" dataname="${result.data.apiInfoList[i].name}" class="upcarrige">上架</a></td><td><a href="javascript:void(0)" name="${result.data.apiInfoList[i].id}" dataname="${result.data.apiInfoList[i].name}" class="undercarrige">下架</a></td><td><a href="javascript:void(0)" id="${result.data.apiInfoList[i].id}" dataname="${result.data.apiInfoList[i].name}" class="delete">删除</a></td></tr>`;
+								   }
+							   }
+							   $("#servicelist").html(str);
+						});
+				   } 
+				 getSList();
+				$(document).on("click",".undercarrige",function(){  
+					   var id = $(this).attr("name");
+					   var name = $(this).attr("dataname");
+					   if(confirm("确认要下架："+name+"API吗？"))
+					   {
+							 $.get(server+"/api/undercarriage.do?apiId="+id, function(result){
+								alert(result.msg);
+								getSList();//刷新列表
+						  });  
+					   }
+					});
+						$(document).on("click",".upcarrige",function(){  
+					   var id = $(this).attr("name");
+					   var name = $(this).attr("dataname");
+					   if(confirm("确认要上架："+name+"API吗？"))
+					   {
+							 $.get(server+"/api/grounding.do?apiId="+id, function(result){
+								alert(result.msg);
+								getSList();//刷新列表
+						  });  
+					   }
+					});
+					$(document).on("click",".delete",function(){  
+					   var id = $(this).attr("id");
+					   var name = $(this).attr("dataname");
+					   if(confirm("确认要删除："+name+"API吗？"))
+					   {
+							 $.get(server+"/api/delete.do?apiId="+id, function(result){
+								alert(result.msg);
+								getSList();//刷新列表
+						  });  
+					   }
+					});
+				   $(document).on("click",".checktrue",function(){  
+					   var id = $(this).attr("name");
+					   var name = $(this).attr("dataname");
+					   if(confirm("确认要通过对："+name+"API的审核吗？"))
+					   {
+							 $.get(server+"/api/check.do?isChecked=true&apiId="+id, function(result){
+								alert(result.msg);
+								getSList();//刷新列表
+						  });  
+					   }
+					});
+                 $(document).on("mouseover", ".example", function () {
+                     $(this).popover('show');
+                 });
+                 $(document).on("mouseout", ".example", function () {
+                     $(this).popover('hide');
+                 });
+			   </script> 
+      </div>
+    </section>
+  </section>
+  <!--main content end--> 
+</section>
+<!-- container section start -->
+</body>
+	<script src="js/jquery-ui-1.10.4.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
+    <!-- bootstrap -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- nice scroll -->
+    <script src="js/jquery.scrollTo.min.js"></script>
+    <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+    <!-- charts scripts -->
+    <script src="assets/jquery-knob/js/jquery.knob.js"></script>
+    <script src="js/jquery.sparkline.js" type="text/javascript"></script>
+    <script src="assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js"></script>
+    <script src="js/owl.carousel.js" ></script>
+    <!-- jQuery full calendar -->
+    <<script src="js/fullcalendar.min.js"></script> <!-- Full Google Calendar - Calendar -->
+	<script src="assets/fullcalendar/fullcalendar/fullcalendar.js"></script>
+    <!--script for this page only-->
+    <script src="js/calendar-custom.js"></script>
+	<script src="js/jquery.rateit.min.js"></script>
+    <!-- custom select -->
+    <script src="js/jquery.customSelect.min.js" ></script>
+	<script src="assets/chart-master/Chart.js"></script>
+   
+    <!--custome script for all page-->
+    <script src="js/scripts.js"></script>
+    <!-- custom script for this page-->
+    <script src="js/sparkline-chart.js"></script>
+    <script src="js/easy-pie-chart.js"></script>
+	<script src="js/jquery-jvectormap-1.2.2.min.js"></script>
+	<script src="js/jquery-jvectormap-world-mill-en.js"></script>
+	<script src="js/xcharts.min.js"></script>
+	<script src="js/jquery.autosize.min.js"></script>
+	<script src="js/jquery.placeholder.min.js"></script>
+	<script src="js/gdp-data.js"></script>	
+	<script src="js/morris.min.js"></script>
+	<script src="js/sparklines.js"></script>	
+	<script src="js/charts.js"></script>
+	<script src="js/jquery.slimscroll.min.js"></script>
+  <script>
+
+      //knob
+      $(function() {
+        $(".knob").knob({
+          'draw' : function () { 
+            $(this.i).val(this.cv + '%')
+          }
+        })
+      });
+
+      //carousel
+      $(document).ready(function() {
+          $("#owl-slider").owlCarousel({
+              navigation : true,
+              slideSpeed : 300,
+              paginationSpeed : 400,
+              singleItem : true
+
+          });
+      });
+
+      //custom select box
+
+      $(function(){
+          $('select.styled').customSelect();
+      });
+	  
+	  /* ---------- Map ---------- */
+	$(function(){
+	  $('#map').vectorMap({
+	    map: 'world_mill_en',
+	    series: {
+	      regions: [{
+	        values: gdpData,
+	        scale: ['#000', '#000'],
+	        normalizeFunction: 'polynomial'
+	      }]
+	    },
+		backgroundColor: '#eef3f7',
+	    onLabelShow: function(e, el, code){
+	      el.html(el.html()+' (GDP - '+gdpData[code]+')');
+	    }
+	  });
+	});
+
+
+
+  </script>
+</html>

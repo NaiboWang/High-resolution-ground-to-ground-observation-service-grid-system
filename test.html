@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>高分中心数据测试</title>
+	<meta name="keywords" content="API数据接口_免费API数据_API数据查找_数据调用">
+	<meta name="description" content="向开发者提供国内外最全的金融数据、电商数据、运营商数据、生活服务数据、应用开发数据、质检数据等接口。">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="Access-Control-Allow-Origin" content="*" />
+	<link href="css/common.css" type="text/css" rel="stylesheet" />
+	<link href="css/base_680b3b8.css" type="text/css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="css/header_5bd59f1.css"/>
+
+	<script src="js/jquery-3.2.1(2).js" ></script>
+	<script src="js/api/utils.js"></script>
+	<script src="js/api/okapi.js"></script>
+	<script src="js/api/search.js"></script>
+	<script src="js/naibowang/role.js"></script>
+	<script src="js/jquery.cookie.js"></script>
+	<script src="js/api/jquery.pagination.js"></script>
+</head>
+<style>
+	body{
+		font-size: 17px;
+	}
+</style>
+<body class="bg-White" style="min-width: 1280px;opacity: 0.9;background: #F4F4F4;">
+<div class="new-index-title" >
+	<div style="width:1080px;margin:0 auto;" class="pr">
+		<div class="clearfix pr">
+			<div class="topstyle">
+				<ul id="tips">
+				</ul>
+				<ul style="float: right" id="buttons">
+				</ul>
+			</div>
+			<div class="clearfix"></div>
+			<a class="new-header-logo fl" href="index.html"></a>
+			<div class="new-header-srch fl">
+				<a href="test.html"><span id="nlp-srch-btn"></span></a><input style="height:15px;border:3px solid #002A56;background-color:#fff" id="header-srch" type="text" class="bul2 fl" placeholder="输入关键词搜索" value="" maxlength="50"/>
+				<span class="header-srch-type db dn c_999" data-header-type><span>服务</span><i class="ml5 caret caret-down caret-b-9b"></i></span>
+				<ul class="new-header-dropdown-list header-srch-type-list dn" data-header-type-list>
+					<li class="header-dropdown-item tc cur-hand active">服务</li>
+					<li class="header-dropdown-item tc cur-hand ">服务商</li>
+				</ul>
+				<span id="header-srch-btn"></span>
+
+				<ul class="new-header-srch-recommend dn" data-srch-recom>
+				</ul>
+			</div>
+		</div>
+		<!--搜索候选
+        <div class="hot-recom">
+        <a id="header-srch-0" href="#" target="_blank">海冰预警</a>
+        <a id="header-srch-1" href="#" target="_blank">矿物勘探</a>
+        <a id="header-srch-2" href="#" target="_blank">农作物估产</a>
+        <a id="header-srch-3" href="#" target="_blank">森林资源调查</a>
+        <a id="header-srch-4" href="#" target="_blank">绿潮预警</a>
+        <a id="header-srch-5" href="#" target="_blank">灾害预报检测</a>
+        </div>
+        -->
+	</div>
+</div>
+<section class="wrap">
+	<div class="new-test zl clearfix ">
+		<div class="testLeft fl ">
+
+			<h3 class="title1" >api搜索</h3>
+			<ul id="ul11" class="endpointData clearfix" data-input-detail="1" >
+				<form id="form-11" enctype="multipart/form-data" method="post">
+					<li name="queryItem" index="0">
+						<span class="tt" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">搜索</span>
+						<div class="con" >
+							<p class="fl">
+								<input id="search_text" type="text" class="inputMode api"  value="杭州市明天天气如何" condition="Required">
+							</p>
+							<div class="help-tip">
+								<a href="#" class="sp-icon" id="help1"></a>
+								<div class="caption-item dn ">
+									<p>请输入您要搜索的内容</p>
+									<i class="sp-icon"></i>
+								</div>
+							</div>
+							<input type="hidden" id="condition_01" name="queryUIs[0].queryCondition" value="Required">
+						</div>
+					</li>
+				</form>
+			</ul>
+			<!--<div class="doDiv">-->
+				<!--<li>-->
+					<!--<a id="testBtn1" href="javascript:;" class="blueBtn" clstag="pageclick|keycount|index_floor_201708231|35" style="text-decoration: none;" >点击测试</a>-->
+				<!--</li>-->
+			<!--</div>-->
+			<!--<h3 class="title1">请求参数</h3>-->
+			<ul id="ul1" class="endpointData clearfix" data-input-detail="1" hidden>
+				<form id="form-1" enctype="multipart/form-data" method="post">
+					<li name="queryItem" index="0">
+						<span class="tt" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">APIKEY</span>
+						<div class="con" >
+							<p class="fl">
+								<input id="apikey" type="text" class="inputMode api"  value="a4163482-1a2b-4ae2-8c2e-7376792a4f2541" condition="Required">
+							</p>
+							<div class="help-tip">
+								<a href="#" class="sp-icon" id="help"></a>
+								<div class="caption-item dn ">
+									<p>描述apikey的信息</p>
+									<i class="sp-icon"></i>
+								</div>
+							</div>
+							<input hidden type="hidden" id="condition_0" name="queryUIs[0].queryCondition" value="Required">
+						</div>
+					</li>
+				</form>
+			</ul>
+			<div class="doDiv">
+				<a id="testBtn1" href="javascript:;" class="blueBtn" clstag="pageclick|keycount|index_floor_201708231|35" style="text-decoration: none;" >点击测试</a>
+				<!--<span class="gray">(本次测试免费)</span>-->
+			</div>
+			<br>
+			<h3 class="title1">解析结果</h3>
+			<ul id="res1" class="endpointData clearfix" data-input-detail="1" >
+				<form id="result-1" enctype="multipart/form-data" method="post">
+					<li name="queryItem" index="0">
+						<span class="tt" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">NLP结果</span>
+						<div class="con" >
+							<p class="fl">
+								<div id="nlp" class="inputMode api"  value="" ></div>
+							</p>
+
+						</div>
+					</li>
+					<li name="queryItem" index="0">
+						<span class="tt" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">服务名称</span>
+						<div class="con" >
+							<p class="fl">
+							<div id="service" class="inputMode api"  value="" ></div>
+							</p>
+
+						</div>
+					</li>
+					<li name="queryItem" index="0">
+						<span class="tt" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">api名称</span>
+						<div class="con" >
+							<p class="fl">
+							<div id="api" class="inputMode api"  value="" ></div>
+							</p>
+						</div>
+					</li>
+
+				</form>
+
+			</ul>
+			<div class="doDiv">
+				<a id="testBtn2" class="blueBtn" clstag="pageclick|keycount|index_floor_201708231|35" style="text-decoration: none;cursor: pointer" >跳转到服务</a>
+				<!--<span class="gray">(本次测试免费)</span>-->
+			</div>
+		</div>
+
+		<div class="testRight fr">
+			<h3>Request URL<a href="javascript:;" class="copy-icon" id="copy" name="copy"></a></h3>
+			<div class="box1" id="urlText"></div>
+			<h3>Response Body</h3>
+			<div class="box2" ><pre id="testResult"></pre></div>
+		</div>
+	</div>
+</section>
+<!--<footer class="g-footer">
+    <div class="wrap ">
+        <dl>
+            <dt class="i51"></dt>
+            <dt>首页</dt>
+            <dd>
+                <a href="javascript:;">平台介绍</a>
+            </dd>
+            <dd>
+                <a href="javascript:;">数据市场</a>
+            </dd>
+            <dd>
+                <a href="javascript:;">商家中心</a>
+            </dd>
+        </dl>
+        <dl>
+            <dt class="i52"></dt>
+            <dt>帮助中心</dt>
+            <dd>
+                <a href="javascript:;">平台介绍</a>
+            </dd>
+            <dd>
+                <a href="javascript:;">数据市场</a>
+            </dd>
+            <dd>
+                <a href="javascript:;">商家中心</a>
+            </dd>
+            <dd>
+                <a href="javascript:;">平台介绍</a>
+            </dd>
+            <dd>
+                <a href="javascript:;">数据市场</a>
+            </dd>
+            <dd>
+                <a href="javascript:;">商家中心</a>
+            </dd>
+        </dl>
+        <dl>
+            <dt class="i53"></dt>
+            <dt>联系我们</dt>
+            <dd>
+                <a href="javascript:;">平台介绍</a>
+            </dd>
+            <dd>
+                <a href="javascript:;">数据市场</a>
+            </dd>
+            <dd>
+                <a href="javascript:;">商家中心</a>
+            </dd>
+        </dl>
+        <div class="erweima">
+            <p>关注官方微信，了解最新资讯</p>
+            <img src="images/wechat_0ebaf26.png" alt="高分中心" />
+        </div>
+    </div>
+</footer>-->
+</body>
+</html>

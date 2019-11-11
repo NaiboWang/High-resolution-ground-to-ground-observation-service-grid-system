@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">    <link rel="stylesheet" href="../css/newcss.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template">
+    <meta name="author" content="GeeksLabs">
+    <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
+
+    <script src="../js/jquery-1.11.1.min.js"></script>
+    <script src="../js/jquery.cookie.js"></script>
+    <script src="../js/naibowang/superUrlParam.js"></script>
+    <title>欢迎使用！</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- bootstrap theme -->
+    <link href="css/bootstrap-theme.css" rel="stylesheet">
+    <!--external css-->
+    <!-- font icon -->
+    <link href="css/elegant-icons-style.css" rel="stylesheet"/>
+    <link href="css/font-awesome.min.css" rel="stylesheet"/>
+    <!-- full calendar css-->
+    <link href="assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet"/>
+    <link href="assets/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet"/>
+    <!-- easy pie chart-->
+    <link href="assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css"
+          media="screen"/>
+    <!-- owl carousel -->
+    <link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
+    <link href="css/jquery-jvectormap-1.2.2.css" rel="stylesheet">
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="css/fullcalendar.css">
+    <link href="css/widgets.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet"/>
+    <link href="css/xcharts.min.css" rel=" stylesheet">
+    <link href="css/jquery-ui-1.10.4.min.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <script src="js/lte-ie7.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<!-- container section start -->
+<section id="container" class="">
+    <header class="header dark-bg">
+        <div class="toggle-nav">
+            <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"></div>
+        </div>
+
+        <!--logo start-->
+        <a href="../index.html"><img class='gflogo' src="../images/api-logo_95fb06f.png"/></a>
+        <!--logo end-->
+        <!--  search form end -->
+        </div>
+        <div class="top-nav notification-row">
+            <!-- notificatoin dropdown start-->
+            <ul class="nav pull-right top-menu">
+                <li id="usname" style="line-height: 30px"></li>
+                <li>
+                    <button class="btn btn-default" id="logout">注销</button>
+                </li>
+                <!-- user login dropdown end -->
+            </ul>
+            <!-- notificatoin dropdown end-->
+        </div>
+    </header>
+    <aside>
+        <div id="sidebar" class="nav-collapse ">
+            <!-- sidebar menu start-->
+            <ul class="sidebar-menu">
+                <li><a class="" href="index.html"> <i class="icon_house_alt"></i> <span>用户管理</span> </a>
+                </li>
+
+            </ul>
+            <!-- sidebar menu end-->
+        </div>
+    </aside>
+
+    <section id="main-content">
+        <section class="wrapper">
+            <!--overview start-->
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 class="page-header"><i class="fa fa-laptop"></i>日志信息查看</h3>
+                    <ol class="breadcrumb">
+                        <li><i class="fa fa-home"></i><a href="index.html">主页</a></li>
+                        <li><i class="fa fa-laptop"></i>日志信息查看</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <nav class="navbar navbar-default" role="navigation">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="#">查询条件</a>
+                        </div>
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse navbar-ex1-collapse">
+                            <form action="log.html" method="get" id="queryform"><input type="hidden" name="checked" id="checked" value="-1" />                            <ul class="nav navbar-nav">
+                                <li>
+                                    <div class="navbar-form">
+                                        <a class="navbar-brand" href="#" style="padding-top:7px;padding-left: 0px">开始时间:</a>
+                                        <input class="form-control" style="width: 180px" type="date" name="startDate" id="startDate">
+                                    </div>
+                                </li>
+                            </ul>
+                                <ul class="nav navbar-nav">
+                                    <li>
+                                        <div class="navbar-form">
+                                            <a class="navbar-brand" href="#" style="padding-top:7px;padding-left: 0px">结束时间:</a>
+                                            <input class="form-control" style="width: 180px"  type="date" name="endDate" id="endDate">
+                                        </div>
+                                    </li>
+                                </ul>
+                            <ul class="nav navbar-nav">
+                                <li>
+                                    <div class="navbar-form">
+                                        <input class="form-control" placeholder="用户名" type="text" name="username" id="username">
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul class="nav navbar-nav">
+                                <li class="active"><a id="querybtn" href="javascript:void(0)">查询</a></li>
+                            </ul>
+                        </div><!-- /.navbar-collapse -->
+                        </form>
+                    </nav>
+                    <script>
+                        $(function(){
+                            $("#querybtn").click(function(){
+                                $("#queryform").submit();
+                            });
+                            $("#startDate").val(getUrlParam("startDate"));
+                            $("#endDate").val(getUrlParam("endDate"));
+                            $("#username").val(getUrlParam("username")!="null"?getUrlParam("username"):"");
+                        });
+
+                    </script>
+                    <section class="panel">
+                        <header class="panel-heading">日志信息</header>
+                        <style>
+                            th, td {
+                                text-align: center
+                            }
+                        </style>
+                        <table class="table table-hover">
+                            <thead>
+                            <tr id="tabletitle">
+                                <th>ID</th>
+                                <th>用户名</th>
+                                <th>操作</th>
+                                <th>操作对象</th>
+                                <th>操作结果</th>
+                                <th>操作时间</th>
+                            </tr>
+                            </thead>
+                            <tbody id="servicelist">
+                            </tbody>
+                        </table>
+                        <!--<div class="form-inline" style="float: right">-->
+                            <!--<div class="form-group  form-inline" style="margin: 20px 0">-->
+                                <!--<form action="log.html" method="get">-->
+                                    <!--<input type="number" min="1" name="pnum" placeholder="页码"-->
+                                           <!--class="form-control form-inline" id="pagenum"-->
+                                           <!--style="width: 60px;text-align: center">-->
+                                    <!--</input>-->
+                                    <!--<input type="submit" class="btn btn-default form-inline" value="跳转">-->
+                                    <!--</input>-->
+                                <!--</form>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <ul class="pagination form-inline" style="float: right" id="fenye">
+                        </ul>
+                    </section>
+                    <div style="margin-top: 55px" id="reg"><a href="newuser.html" class="btn btn-primary btn-lg"
+                                                              style="text-align: center;display: block;max-width: 130px;margin: 0 auto">注册新用户</a>
+                    </div>
+                    <script>
+                        function getSList()//得到服务列表
+                        {
+                            $("#servicelist").html("");//清空原有列表
+                            var pnum = 1;
+                            if (getUrlParam("pnum") != null)
+                                pnum = getUrlParam("pnum");
+                            var oid = "&startDate=";
+                            var che = "&endDate=";
+                            var sname = "";
+                            var psize = "&pageSize=50";
+                            var username = "";
+                            if(getUrlParam("username") != null){
+                                sname = "&username="+getUrlParam("username");
+                                username = getUrlParam("username");
+                            }
+                            else
+                            {
+                                username = "";
+                            }
+
+                            if(getUrlParam("startDate") != null && getUrlParam("startDate") != "-1")
+                                oid = "&startDate="+getUrlParam("startDate");
+                            if(getUrlParam("endDate") != null && getUrlParam("endDate") != "-1")
+                                che = "&endDate="+getUrlParam("endDate");
+
+                            if(username=="null")
+                                username="";
+                            var formgenerate = `
+                            <input type="hidden" name = "pageSize" value = "50" />
+                            <input type="hidden" name = "username" value = "${username}" />
+                            <input type="hidden" name = "startDate" value = "${getUrlParam("startDate")}" />
+                            <input type="hidden" name = "endDate" value = "${getUrlParam("endDate")}" />
+                            `;
+                            checklogin();//登陆检测
+                            var link = server + "/manage/log/searchOperationLog.do?pageNum=" + pnum + psize+oid+che+sname;
+                            console.log(link);
+                            $.get(link, function (result) {
+                                if(result.status){
+                                    alert(result.msg);
+                                }
+
+                                //分页信息判断
+                                var prePage = 1;
+                                var nextPage = 1;
+                                if (result.data.isFirstPage != true)
+                                    prePage = result.data.prePage;
+                                if (result.data.isLastPage != true)
+                                    nextPage = result.data.nextPage;
+                                $("#pagenum").attr("max", result.data.pages);
+                                fenye=`<li><a href="log.html?pnum=1${oid}${che}${sname}${psize}">首页</a></li>`;
+                                if(result.data.isFirstPage!=true){
+                                    fenye+=`<li><a href="log.html?pnum=${prePage}${oid}${che}${sname}${psize}">上一页</a></li>`;
+                                }
+                                if(result.data.pages==0){
+                                    fenye+=`<li><a href="#">第${result.data.pages}/${result.data.pages}页</a></li>`;
+                                }else fenye+=`<li><a href="#">第${result.data.pageNum}/${result.data.pages}页</a></li>`;
+                                if(result.data.isLastPage!=true){
+                                    fenye+=`<li><a href="log.html?pnum=${nextPage}${oid}${che}${sname}${psize}">下一页</a></li>`;
+                                }
+                                fenye+=`<li><a href="log.html?pnum=${result.data.pages}${oid}${che}${sname}${psize}">尾页</a></li>`;
+                                fenye+=`<li>
+<form method="get" action="log.html" style="display:inline-block">
+<input type="number" min="1" max=${result.data.pages} name="pnum" placeholder="页码"class="form-control form-inline" id="pagenum" style="width: 60px;text-align: center">
+${formgenerate}
+<input class="btn btn-default form-inline" type="submit"  value="跳转"></input></form></li>`;
+                            //     fenye+='<div class="form-inline" style="float: right">' +
+                            //         '<div class="form-group  form-inline" style="margin: 20px 0">'+
+                            //         ' <form action="log.html?" method="get">'+
+                            //         '<input type="number" min="1" name="pnum" placeholder="页码" class="form-control form-inline" id="pagenum" style="width: 60px;text-align: center">' +
+                            //         '</input>' +
+                            //         '<li><a href="log.html?pnum=3${oid}${che}${sname}${psize}">跳转</a></li>' +
+                            //         '</form></div></div>'
+                                // fenye+=`<li><a href="log.html?pnum=${result.data.pages}${oid}${che}${sname}${psize}">跳转</a></li>`;
+
+                                // var fenye = ` <li><a href="log.html?pnum=1${oid}${che}${sname}${psize}">首页</a></li><li><a href="log.html?pnum=${prePage}${oid}${che}${sname}${psize}">上一页</a></li><li><a href="#">第${result.data.pageNum}/${result.data.pages}页</a></li><li><a href="log.html?pnum=${nextPage}${oid}${che}${sname}${psize}">下一页</a><li><a href="log.html?pnum=${result.data.pages}${oid}${che}${sname}${psize}">尾页</a></li></li>`;
+                                $("#fenye").html(fenye);
+                                var str = "";
+                                for (var i = 0; i < result.data.list.length; i++) {
+                                    str += `<tr><td>${i + 1}</td><td>${result.data.list[i].userName}</td><td>${result.data.list[i].operation}</td><td>${result.data.list[i].operationObject}</td><td>${result.data.list[i].result}</td><td>${result.data.list[i].createTime}</td></tr>`;
+                                }
+                                $("#servicelist").html(str);
+                            });
+                        }
+                        getSList();
+
+
+                        $(document).ready(function(){
+                            // $('body').on('click','#jump',function(){
+                            //     var jumplink = $("#jump").attr("name");
+                            //     var num = $("#pagenum").val();
+                            //     jumplink = jumplink + "&pnum=" + num;
+                            //     // console.log(jumplink);
+                            //     window.location.href=jumplink;
+                            // });
+                            $("#log").addClass("active");
+                        });
+                    </script>
+                </div>
+            </div>
+        </section>
+    </section>
+    <!--main content end-->
+</section>
+<!-- container section start -->
+</body>
+<script src="js/jquery-ui-1.10.4.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
+<!-- bootstrap -->
+<script src="js/bootstrap.min.js"></script>
+<!-- nice scroll -->
+<script src="js/jquery.scrollTo.min.js"></script>
+<script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+<!-- charts scripts -->
+<script src="assets/jquery-knob/js/jquery.knob.js"></script>
+<script src="js/jquery.sparkline.js" type="text/javascript"></script>
+<script src="assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js"></script>
+<script src="js/owl.carousel.js"></script>
+<!-- jQuery full calendar -->
+<script src="assets/fullcalendar/fullcalendar/fullcalendar.js"></script>
+<!--script for this page only-->
+<script src="js/calendar-custom.js"></script>
+<script src="js/jquery.rateit.min.js"></script>
+<!-- custom select -->
+<script src="js/jquery.customSelect.min.js"></script>
+<script src="assets/chart-master/Chart.js"></script>
+
+<!--custome script for all page-->
+<script src="js/scripts.js"></script>
+<!-- custom script for this page-->
+<script src="js/sparkline-chart.js"></script>
+<script src="js/easy-pie-chart.js"></script>
+<script src="js/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="js/jquery-jvectormap-world-mill-en.js"></script>
+<script src="js/xcharts.min.js"></script>
+<script src="js/jquery.autosize.min.js"></script>
+<script src="js/jquery.placeholder.min.js"></script>
+<script src="js/gdp-data.js"></script>
+<script src="js/morris.min.js"></script>
+<script src="js/sparklines.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/jquery.slimscroll.min.js"></script>
+<script>
+
+    //knob
+    $(function () {
+        $(".knob").knob({
+            'draw': function () {
+                $(this.i).val(this.cv + '%')
+            }
+        })
+    });
+
+    //carousel
+    $(document).ready(function () {
+        $("#owl-slider").owlCarousel({
+            navigation: true,
+            slideSpeed: 300,
+            paginationSpeed: 400,
+            singleItem: true
+
+        });
+    });
+
+    //custom select box
+
+    $(function () {
+        $('select.styled').customSelect();
+    });
+
+    /* ---------- Map ---------- */
+    $(function () {
+        $('#map').vectorMap({
+            map: 'world_mill_en',
+            series: {
+                regions: [{
+                    values: gdpData,
+                    scale: ['#000', '#000'],
+                    normalizeFunction: 'polynomial'
+                }]
+            },
+            backgroundColor: '#eef3f7',
+            onLabelShow: function (e, el, code) {
+                el.html(el.html() + ' (GDP - ' + gdpData[code] + ')');
+            }
+        });
+    });
+
+
+</script>
+</html>

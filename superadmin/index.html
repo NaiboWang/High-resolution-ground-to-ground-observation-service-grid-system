@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">    <link rel="stylesheet" href="../css/newcss.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template">
+    <meta name="author" content="GeeksLabs">
+    <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
+
+    <script src="../js/jquery-1.11.1.min.js"></script>
+    <script src="../js/jquery.cookie.js"></script>
+    <script src="../js/naibowang/superUrlParam.js"></script>
+    <title>欢迎使用！</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- bootstrap theme -->
+    <link href="css/bootstrap-theme.css" rel="stylesheet">
+    <!--external css-->
+    <!-- font icon -->
+    <link href="css/elegant-icons-style.css" rel="stylesheet"/>
+    <link href="css/font-awesome.min.css" rel="stylesheet"/>
+    <!-- full calendar css-->
+    <link href="assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet"/>
+    <link href="assets/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet"/>
+    <!-- easy pie chart-->
+    <link href="assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css"
+          media="screen"/>
+    <!-- owl carousel -->
+    <link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
+    <link href="css/jquery-jvectormap-1.2.2.css" rel="stylesheet">
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="css/fullcalendar.css">
+    <link href="css/widgets.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet"/>
+    <link href="css/xcharts.min.css" rel=" stylesheet">
+    <link href="css/jquery-ui-1.10.4.min.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <script src="js/lte-ie7.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<!-- container section start -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="exampleModalLabel" style="color:black">不通过审核</h4>
+            </div>
+            <form onsubmit="return checkfalse()">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="username" class="control-label">用户名:</label>
+                        <input type="text" class="form-control" id="username" readonly>
+                        <input type="hidden" id="userid">
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="control-label">不通过原因:</label>
+                        <textarea class="form-control" id="message-text" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">提交</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $('#exampleModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var recipient = button.data('whatever') // Extract info from data-* attributes
+        var usid = button.data('usid');
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this);
+        modal.find('#username').val(recipient);
+        modal.find('#userid').val(usid);
+    })
+
+    function checkfalse() {
+        var id = $("#userid").val();
+        var msg = $("#message-text").val();
+        var name = $("#username").val();
+        if (confirm("确认要不通过对：" + name + "用户的审核吗？")) {
+            $.get(server + "/user/manage/check.do?checked=false&userId=" + id+"&uncheckedCause="+msg, function (result) {
+                alert(result.msg);
+                if (!result.status) {
+                    $('#exampleModal').modal('hide');
+                    getSList();//刷新列表
+                }
+            });
+        }
+        return false;
+    }
+</script>
+<section id="container" class="">
+    <header class="header dark-bg">
+        <div class="toggle-nav">
+            <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"></div>
+        </div>
+
+        <!--logo start-->
+        <!--<img class='gflogo' src="../images/api-logo_95fb06f.png"/>-->
+        <a href="../index.html"><img class='gflogo' src="../images/api-logo_95fb06f.png"/></a>
+        <!--logo end-->
+        <!--  search form end -->
+        </div>
+        <div class="top-nav notification-row">
+            <!-- notificatoin dropdown start-->
+            <ul class="nav pull-right top-menu">
+                <li id="usname" style="line-height: 30px"></li>
+                <li>
+                    <button class="btn btn-default" id="logout">注销</button>
+                </li>
+                <!-- user login dropdown end -->
+            </ul>
+            <!-- notificatoin dropdown end-->
+        </div>f
+    </header>
+    <aside>
+        <div id="sidebar" class="nav-collapse ">
+            <!-- sidebar menu start-->
+            <ul class="sidebar-menu">
+                <li class="active"><a class="" href="index.html"> <i class="icon_house_alt"></i> <span>用户管理</span> </a>
+                </li>
+
+            </ul>
+            <!-- sidebar menu end-->
+        </div>
+    </aside>
+
+    <section id="main-content">
+        <section class="wrapper">
+            <!--overview start-->
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 class="page-header"><i class="fa fa-laptop"></i>用户管理</h3>
+                    <ol class="breadcrumb">
+                        <li><i class="fa fa-home"></i><a href="index.html">主页</a></li>
+                        <li><i class="fa fa-laptop"></i>用户管理</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <nav class="navbar navbar-default" role="navigation">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="#">筛选</a>
+                        </div>
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse navbar-ex1-collapse">
+                            <ul class="nav navbar-nav">
+                                <li class="dropdown" id="ulroleid">
+                                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">角色:全部<b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#" datatype="-1">类型:全部</a></li>
+                                        <li><a href="#" datatype="1">类型:管理员</a></li>
+                                        <li><a href="#" datatype="2">类型:普通用户</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <ul class="nav navbar-nav">
+                            <li class="dropdown"  id="ultype">
+                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">状态:全部<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#" datatype="-1">类型:全部</a></li>
+                                    <li><a href="#" datatype="0">类型:已审核</a></li>
+                                    <li><a href="#" datatype="1">类型:未审核</a></li>
+                                    <li><a href="#" datatype="2">类型:未通过</a></li>
+                                </ul>
+                            </li>
+                            <!--ul class="nav navbar-nav">
+                                <li class="dropdown" id="ulorg">
+                                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">组织类别:全部<b class="caret"></b></a>
+                                    <ul class="dropdown-menu"></ul>
+                                </li>
+                            </ul-->
+                        </ul>
+                            <ul class="nav navbar-nav">
+                                <li>
+                                    <div class="navbar-form">
+                                        <form action="index.html" method="get" id="queryform" /><input type="hidden" name="roleId" id="roleId" value="-1" /><input type="hidden" name="checked" id="checked" value="-1" /><input type="hidden" name="organizationId" id="organizationId" value="-1" /><input class="form-control" placeholder="搜索" type="text" name="userName" id="userName">
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul class="nav navbar-nav">
+                                <li class="active"><a id="querybtn" href="javascript:void(0)">查询</a></li>
+                            </ul>
+                        </div><!-- /.navbar-collapse -->
+                        </form>
+                    </nav>
+
+                    <script>
+                        $(function(){
+                            $("#querybtn").click(function(){
+                                $("#queryform").submit();
+                            });
+
+
+                            $.get(server + "/organization/list.do", function (result) {
+                                var listItemData = result.data;
+                                var st = `<li><a href="#" datatype="-1">组织类别:全部</a></li>`;
+                                for (var k = 0; k < listItemData.length; k++) {
+                                    st += `<li><a href="#" datatype="${listItemData[k].id}">组织类别:${listItemData[k].organizationName}</a></li>`;
+                                }
+                                $("#ulorg ul").html(st);
+                                if(getUrlParam("organizationId") != null && getUrlParam("organizationId") != "-1")
+                                {
+                                    $("#organizationId").val(getUrlParam("organizationId"));
+                                    var checkid = getUrlParam("organizationId");
+                                    var conten = $("#ulorg a[datatype="+checkid+"]").text();
+                                    $("#ulorg").children("a").html(conten+`<b class="caret"></b>`);
+                                }
+                            });
+
+                            $(document).on("click","#ulroleid ul li a",function(){
+                                var org = $(this).attr("datatype");
+                                var conte = $(this).text();
+                                $("#roleId").val(org);
+                                $("#ulroleid").children("a").html(conte+`<b class="caret"></b>`);
+                            });
+
+                            $(document).on("click","#ultype ul li a",function(){
+                                var tp = $(this).attr("datatype");
+                                var content = $(this).text();
+                                $("#checked").val(tp);
+                                $("#ultype").children("a").html(content+`<b class="caret"></b>`);
+                            });
+                            if(getUrlParam("checked") != null && getUrlParam("checked") != "-1")
+                            {
+                                $("#checked").val(getUrlParam("checked"));
+                                var checkid = getUrlParam("checked");
+                                var conten = $("#ultype a[datatype="+checkid+"]").text();
+                                $("#ultype").children("a").html(conten+`<b class="caret"></b>`);
+                            }
+
+                            if(getUrlParam("roleId") != null && getUrlParam("roleId") != "-1")
+                            {
+                                $("#roleId").val(getUrlParam("roleId"));
+                                var checkid = getUrlParam("roleId");
+                                var conten = $("#ulroleid a[datatype="+checkid+"]").text();
+                                $("#ulroleid").children("a").html(conten+`<b class="caret"></b>`);
+                            }
+
+
+                            // $(document).on("click","#ulorg ul li a",function(){
+                            //     var org = $(this).attr("datatype");
+                            //     var conte = $(this).text();
+                            //     $("#organizationId").val(org);
+                            //     $("#ulorg").children("a").html(conte+`<b class="caret"></b>`);
+                            // });
+
+
+                            $("#serviceName").val(getUrlParam("serviceName"));
+                        });
+                    </script>
+
+
+                    <section class="panel">
+                        <header class="panel-heading">已存在用户列表</header>
+                        <style>
+                            th, td {
+                                text-align: center
+                            }
+                        </style>
+                        <table class="table table-hover">
+                            <thead>
+                            <tr id="tabletitle">
+                                <th>ID</th>
+                                <th>用户名</th>
+                                <th>角色</th>
+                                <th>状态</th>
+
+                            </tr>
+                            </thead>
+                            <tbody id="servicelist">
+                            </tbody>
+                        </table>
+                        <!--<div class="form-inline" style="float: right">-->
+                            <!--<div class="form-group  form-inline" style="margin: 20px 0">-->
+                                <!--<form action="index.html" method="get">-->
+                                    <!--<input type="number" min="1" max="10" name="pnum" placeholder="页码"-->
+                                           <!--class="form-control form-inline" id="pagenum"-->
+                                           <!--style="width: 60px;text-align: center">-->
+                                    <!--</input>-->
+                                    <!--<input type="submit" class="btn btn-default form-inline" value="跳转">-->
+                                    <!--</input>-->
+                                <!--</form>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <ul class="pagination form-inline" style="float: right" id="fenye">
+                        </ul>
+                    </section>
+<!--                    <div style="margin-top: 55px" id="reg"><a href="newuser.html" class="btn btn-primary btn-lg"-->
+<!--                                                              style="text-align: center;display: block;max-width: 130px;margin: 0 auto">注册新用户</a>-->
+                    </div>
+                    <script>
+                        function getSList()//得到服务列表
+                        {
+                            $("#servicelist").html("");//清空原有列表
+                            var pnum = 1;
+                            var roleid="";
+                            var oid = "";
+                            var che = "";
+                            var uname = "";
+
+
+                            // if(getUrlParam("serviceName") != null)
+                            //     sname = "&serviceName="+getUrlParam("serviceName");
+                            if(getUrlParam("userName") != null)
+                                uname = "&username="+getUrlParam("userName");
+                            if(getUrlParam("pnum") != null)
+                                pnum = getUrlParam("pnum");
+                            if(getUrlParam("roleId") != null && getUrlParam("roleId") != "-1")
+                                roleid = "&roleId="+getUrlParam("roleId");
+                            if(getUrlParam("checked") != null && getUrlParam("checked") != "-1")
+                                che = "&checked="+getUrlParam("checked");
+                            if(getUrlParam("organizationId")!=null&&getUrlParam("organizationId")!="-1"){
+                                oid="&organizationId="+getUrlParam("organizationId");
+                            }
+                            var formgenerate = `
+                            <input type="hidden" name = "pageSize" value = "10" />`;
+                            if(getUrlParam("userName") != null)
+                                formgenerate+=`<input type="hidden" name = "username" value ="${getUrlParam("userName")}" />`;
+                            if(getUrlParam("roleId") != null && getUrlParam("roleId") != "-1")
+                                formgenerate+=`<input type="hidden" name = "roleId" value ="${getUrlParam("roleId")}" />`;
+                            if(getUrlParam("checked") != null && getUrlParam("checked") != "-1")
+                                formgenerate+=`<input type="hidden" name = "checked" value ="${getUrlParam("checked")}" />`;
+                            if(getUrlParam("organizationId")!=null&&getUrlParam("organizationId")!="-1")
+                                formgenerate+=`<input type="hidden" name = "organizationId" value ="${getUrlParam("organizationId")}" />`;
+                            checklogin();//登陆检测
+
+                            var link = server + "/user/manage/list.do?pageNum=" + pnum + "&pageSize=10"+roleid+che+uname;
+                            $.get(link, function (result) {
+                                //分页信息判断
+                                var prePage = 1;
+                                var nextPage = 1;
+                                if(result.data.isFirstPage != true)
+                                    prePage = result.data.prePage;
+                                if(result.data.isLastPage != true)
+                                    nextPage = result.data.nextPage;
+                                // else
+                                //     nextPage = result.data.navigateLastPage;
+                                $("#pagenum").attr("max",result.data.pages) ;
+                                var fenye;
+                                fenye=`<li><a href="index.html?pnum=1"${roleid}${che}${uname}>首页</a></li>`;
+                                if(result.data.isFirstPage!=true){
+                                    fenye+=`<li><a href="index.html?pnum=${prePage}${roleid}${che}${uname}">上一页</a></li>`;
+                                }
+                                if(result.data.pages==0){
+                                    fenye+=`<li><a href="#">第${result.data.pages}/${result.data.pages}页</a></li>`;
+                                }else fenye+=`<li><a href="#">第${result.data.pageNum}/${result.data.pages}页</a></li>`;
+                                // fenye+=`<li><a href="#">第${result.data.pageNum}/${result.data.pages}页</a></li>`;
+                                if(result.data.isLastPage!=true){
+                                    fenye+=`<li><a href="index.html?pnum=${nextPage}${roleid}${che}${uname}">下一页</a><li>`;
+                                }
+                                fenye+=`<li><a href="index.html?pnum=${result.data.pages}${roleid}${che}${uname}">尾页</a></li></li>`;
+                                fenye+=`<li>
+                                <form method="get" action="index.html" style="display:inline-block">
+                                <input type="number" min="1" max=${result.data.pages} name="pnum" placeholder="页码"class="form-control form-inline" id="pagenum" style="width: 60px;text-align: center">
+                                ${formgenerate}
+                                <input class="btn btn-default form-inline" type="submit"  value="跳转"></input></form></li>`;
+                                $("#pagenum").attr("max", result.data.pages);
+                                $("#fenye").html(fenye);
+                                var str = "";
+                                for (var i = 0; i < result.data.list.length; i++) {
+                                    var st = "";//状态
+                                    if (result.data.list[i].checked == 0) {
+                                        st = "<td style='color:blue'>正常</td>";
+                                    }
+                                    else if (result.data.list[i].checked == 1) {
+                                        st = "<td>未审核</td>";
+                                    }
+                                    else {
+                                        st = "<td><span style='color: red;'>未通过</span>" + `<a class="example fa fa-question-circle" role="button" data-toggle="popover" data-trigger="manual" title="未通过原因" data-content="${result.data.list[i].remarks}" style=' font-size:x-large'></a>` + "</td>";
+                                    }
+                                    str += `<tr><td>${i + 1}</td><td><a href="userinformation.html?pnum=${pnum}&id=${result.data.list[i].userId}">${result.data.list[i].username}</a></td><td>${result.data.list[i].roleName}</td>${st}</tr>`;
+                                    console.log(result.data.list[i])
+                                }
+                                $("#servicelist").html(str);
+                            });
+                        }
+
+                        getSList();
+                        $(document).on("click", ".delete", function () {
+                            var id = $(this).attr("id");
+                            var name = $(this).attr("dataname");
+                            if (confirm("确认要删除：" + name + "用户吗？")) {
+                                $.get(server + "/user/manage/delete.do?userId=" + id, function (result) {
+                                    alert(result.msg);
+                                    getSList();//刷新列表
+                                });
+                            }
+                        });
+                        $(document).on("click", ".checktrue", function () {
+                            var id = $(this).attr("name");
+                            var name = $(this).attr("dataname");
+                            if (confirm("确认要通过对：" + name + "用户的审核吗？")) {
+                                $.get(server + "/user/manage/check.do?checked=true&userId=" + id, function (result) {
+                                    alert(result.msg);
+                                    getSList();//刷新列表
+                                });
+                            }
+                        });
+                        $(document).on("mouseover", ".example", function () {
+                            $(this).popover('show');
+                        });
+                        $(document).on("mouseout", ".example", function () {
+                            $(this).popover('hide');
+                        });
+                    </script>
+                </div>
+            </div>
+        </section>
+    </section>
+    <!--main content end-->
+</section>
+<!-- container section start -->
+</body>
+<script src="js/jquery-ui-1.10.4.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
+<!-- bootstrap -->
+<script src="js/bootstrap.min.js"></script>
+<!-- nice scroll -->
+<script src="js/jquery.scrollTo.min.js"></script>
+<script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+<!-- charts scripts -->
+<script src="assets/jquery-knob/js/jquery.knob.js"></script>
+<script src="js/jquery.sparkline.js" type="text/javascript"></script>
+<script src="assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js"></script>
+<script src="js/owl.carousel.js"></script>
+<!-- jQuery full calendar -->
+<script src="assets/fullcalendar/fullcalendar/fullcalendar.js"></script>
+<!--script for this page only-->
+<script src="js/calendar-custom.js"></script>
+<script src="js/jquery.rateit.min.js"></script>
+<!-- custom select -->
+<script src="js/jquery.customSelect.min.js"></script>
+<script src="assets/chart-master/Chart.js"></script>
+
+<!--custome script for all page-->
+<script src="js/scripts.js"></script>
+<!-- custom script for this page-->
+<script src="js/sparkline-chart.js"></script>
+<script src="js/easy-pie-chart.js"></script>
+<script src="js/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="js/jquery-jvectormap-world-mill-en.js"></script>
+<script src="js/xcharts.min.js"></script>
+<script src="js/jquery.autosize.min.js"></script>
+<script src="js/jquery.placeholder.min.js"></script>
+<script src="js/gdp-data.js"></script>
+<script src="js/morris.min.js"></script>
+<script src="js/sparklines.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/jquery.slimscroll.min.js"></script>
+<script>
+
+    //knob
+    $(function () {
+        $(".knob").knob({
+            'draw': function () {
+                $(this.i).val(this.cv + '%')
+            }
+        })
+    });
+
+    //carousel
+    $(document).ready(function () {
+        $("#owl-slider").owlCarousel({
+            navigation: true,
+            slideSpeed: 300,
+            paginationSpeed: 400,
+            singleItem: true
+
+        });
+    });
+
+    //custom select box
+
+    $(function () {
+        $('select.styled').customSelect();
+    });
+
+    /* ---------- Map ---------- */
+    $(function () {
+        $('#map').vectorMap({
+            map: 'world_mill_en',
+            series: {
+                regions: [{
+                    values: gdpData,
+                    scale: ['#000', '#000'],
+                    normalizeFunction: 'polynomial'
+                }]
+            },
+            backgroundColor: '#eef3f7',
+            onLabelShow: function (e, el, code) {
+                el.html(el.html() + ' (GDP - ' + gdpData[code] + ')');
+            }
+        });
+    });
+
+
+</script>
+</html>

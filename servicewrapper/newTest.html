@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>高分中心数据测试</title>
+    <meta name="keywords" content="API数据接口_免费API数据_API数据查找_数据调用">
+    <meta name="description" content="向开发者提供国内外最全的金融数据、电商数据、运营商数据、生活服务数据、应用开发数据、质检数据等接口。">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="../css/common.css" type="text/css" rel="stylesheet" />
+    <link href="../css/base_680b3b8.css" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="../css/header_5bd59f1.css"/>
+
+    <script src="../js/jquery-3.2.1(2).js" ></script>
+    <script src="../js/api/utils.js"></script>
+    <script src="../js/api/search.js"></script>
+    <script src="../js/naibowang/role.js"></script>
+    <script src="../js/jquery.cookie.js"></script>
+    <script src="../js/api/jquery.pagination.js"></script>
+
+    <script src="js/vue.js"></script>
+    <!--bootstrap开始-->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!--bootstrap结束-->
+</head>
+<style>
+    body{
+        font-size: 17px;
+    }
+</style>
+
+
+<body class="bg-White" style="min-width: 1280px;opacity: 0.9;background: #F4F4F4;">
+
+<div id="app" >
+    <div class="new-index-title" >
+        <div style="width:1080px;margin:0 auto;" class="pr">
+            <div class="clearfix pr">
+                <div class="topstyle">
+                    <ul id="tips">
+                    </ul>
+                    <ul style="float: right" id="buttons">
+                    </ul>
+                </div>
+                <div class="clearfix"></div>
+                <a class="new-header-logo fl" href="index.html"></a>
+
+            </div>
+        </div>
+    </div>
+    <section class="wrap2 " style="width:1031px">
+        <div class="card zl clearfix ">
+            <div class="row" style="margin: 10px;padding:10px;">
+            	<div class="col-md-6">
+	                <h3 style="text-align: left;margin-bottom: 20px">测试参数填写</h3>
+	                <form class="form-horizontal" >
+	                	  <div class="form-group">
+						    <label for="api_id">ID</label>
+						    <input type="email" class="form-control" id="api_id" placeholder="ID" v-model="api_info.api_id" disabled>
+						  </div>
+						  <div class="form-group">
+						    <label for="api_maxPage">最大页数</label>
+						    <small>-1表示不限制</small>
+						    <input type="email" class="form-control" id="api_maxPage" placeholder="最大页数" v-model="maxPage">
+						  </div>
+						  <div class="form-group">
+							<div class="btn-group" >
+								<div class="btn-group" >
+									<button id="dropdown-btn1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+										添加参数
+										<span class="caret"></span>
+									</button>
+									<div aria-labelledby="dropdown-btn1" class="dropdown-menu">
+										<template v-for="field in api_info.api_request_parameters_candidate"  class="caret" >
+											<li  @click="addInputParm(field)"> <a>{{field.query_name}}</a></li>
+										</template>
+									</div>
+								</div>
+							  <button type="button" class="btn btn-success" @click="doTest">点击测试</button>
+							</div>
+						  </div>
+
+
+						  <div class="form-group">
+						  	<label for="api_url">测试URL</label>
+	                		<textarea class="form-control" rows="4" id="api_url" v-model="targetURL"></textarea>
+						  </div>
+	                </form>
+	                
+	            </div>
+
+  				<div class="col-md-6">
+	                <h3 style="text-align: left;">返回结果</h3>
+	                <form>
+	                	<div class="form-group">
+	                		<label for="response">Response Body</label>
+							<small style="color: #0ca09b">{{responseMsg}}</small>
+	                		<textarea class="form-control" rows="10" id="response" v-model="responseData"></textarea>
+	                	</div>
+	                	<!--<div class="form-group">-->
+	                		<!--<label >Networks</label>-->
+	                		<!--<ul class="list-group">-->
+                                <!--<template v-for="network in api_info.api_network">-->
+                                    <!--<li class="list-group-item"><a href="network">{{network}}</a></li>				-->
+                                <!--</template>-->
+                            <!--</ul>-->
+	                	<!--</div>-->
+
+	                </form>	              
+	            </div>
+            
+        </div>
+		</div>
+	</section>
+</div>
+</body>
+<script>
+    let app=new Vue({
+        el: '#app',
+        data: {
+            responseData:"",
+			responseMsg:"",
+        	maxPage:-1,
+        	targetURL:"",
+            api_info: {
+                api_name: "",
+                api_description: "",
+                api_url: "",
+                img_link: "",
+                json_link: "",
+                api_crawl_rules_link: "",//link address
+                main_sec_id: 0,
+                sections: [
+                    "111", "222",
+                ],
+                api_request_parameters_candidate:[
+                    {
+                        level:0,
+                        query_name:"__max_page",
+                        required:false,
+                        type:"int",
+                    },
+                    {
+                        level:2,
+                        query_name:" ",
+                        required:false,
+                        type:"int",
+                    },
+                ],
+                candidate: [
+                    [{
+                        items:
+                            {
+                                id: 0,
+                                name: 'text_1/link_1/img_1',//参数名
+                                description: 'default',  //参数解释
+                                type: 'text/link/img',
+                                example: '',   //示例值
+                                select: "1/0"  //是否选择此值
+                            },
+                        section_name:""
+                    }
+                    ]
+                ]
+            },
+        },
+        methods:{
+            updateInfo(id){
+            	this.getAPIInfo(id,(result)=>{
+            		console.log("result",result);
+            		this.api_info=result.data;
+            		this.targetURL="http://service.cheosgrid.org:8089/call_service/"+this.api_info.api_id+"?"+"__max_page="+this.maxPage;
+            		for(let field in this.api_info.api_request_parameters_candidate){
+            		    if(field.required)
+            		        this.targetURL=this.targetURL+"&"+field.query_name+"=";
+					}
+            	})
+            },
+            getAPIInfo(id,success){
+            	$.ajax({
+                    url:'http://service.cheosgrid.org:8089/service?api_id='+id,
+                    type:"GET",
+                    contentType:"application/json; charset=utf-8",
+                    dataType:"json",
+                    success: success
+                    }
+                )
+            },
+            addFilterParm(field){
+                console.log("add filter parameters",field);
+            	this.targetURL+="&"+field.query_name+"=";
+                this.targetURL=this.targetURL.replace(/\+/g, '%2B');  //URL中的"+"号会被转义成空格，编码成%2B可以避免
+            },
+			addInputParm(field){
+                console.log("add input parameters",field);
+                this.targetURL+="&"+field.query_name+"=";
+                this.targetURL=this.targetURL.replace(/\+/g, '%2B');  //URL中的"+"号会被转义成空格，编码成%2B可以避免
+			},
+            getUrlParam() {
+            	let name="api_id";
+				let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				let r = window.location.search.substr(1).match(reg);
+				if(r != null) return unescape(r[2]);
+				return "";
+	        },
+            doTest(){
+                this.responseMsg="正在载入中......";
+                this.responseData="请等待请求返回......"
+                $.ajax({
+                    url:this.targetURL,
+                    type:"GET",
+                    contentType:"application/json; charset=utf-8",
+                    dataType:"json",
+                    success: (result)=>{
+                            console.log("callResult",result);
+                            this.responseData=JSON.stringify(result.data);
+                            this.responseMsg=JSON.stringify(result.msg)
+                        }
+                    }
+                );
+                this.getAPIInfo(this.api_info.api_id,(result)=>{
+                    this.api_info=result.data;
+                })
+            },
+        },
+        computed:{
+            filterParm(){
+                filterParameters=this.api_info.api_request_parameters_candidate.filter((field)=>field.level===2);
+				console.log("filter parameters",filterParameters);
+                if(filterParameters.length===0) return {name: '无可选参数'};
+                return filterParameters;
+            },
+			inputParm(){
+				console.log("input Parameters",this.api_info.api_request_parameters_candidate);
+				inputParameters=this.api_info.api_request_parameters_candidate.filter((field)=>field.level<2);
+				if(inputParameters.length===0) return {name: '无可选参数'};
+				return this.api_info.api_request_parameters_candidate;
+			}
+        },
+		watch:{
+			maxPage:function (newValue,oldValue) {
+                this.targetURL=this.targetURL.replace(/__max_page=-?\d*/,"__max_page="+newValue);
+
+            }
+		},
+        created () {
+        	console.log("created");
+        	this.updateInfo(this.getUrlParam());
+
+        }
+    })
+</script>
+</html>

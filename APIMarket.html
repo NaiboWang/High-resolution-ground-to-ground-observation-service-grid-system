@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>高分中心数据集市</title>
+		<meta name="keywords" content="API数据接口_免费API数据_API数据查找_数据调用">
+		<meta name="description" content="向开发者提供国内外最全的金融数据、电商数据、运营商数据、生活服务数据、应用开发数据、质检数据等接口。">
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<link href="css/common.css" type="text/css" rel="stylesheet" />
+		<link href="css/base_680b3b8.css" type="text/css" rel="stylesheet" />
+		<link href="css/pagination.css"/>
+		<link rel="stylesheet" type="text/css" href="css/header_5bd59f1.css"/>
+		<script src="server.js"></script>
+		<script src="js/jquery-3.2.1(2).js" ></script>
+		<script src="lib/jquery.raty.min.js"></script>
+		<script src="js/api/jquery.pagination.js"></script>
+		<script src="js/naibowang/role.js"></script>
+		<script src="js/jquery.cookie.js"></script>
+		<script src="js/api/utils.js"></script>
+		<script src="js/api/sort_ajax.js"></script>
+		<script src="js/api/search.js"></script>
+	</head>
+	<body class="bg-White body" style="min-width: 1280px;opacity: 0.9;background: #F4F4F4;">
+	<div class="new-index-title" >
+
+		<div style="width:1080px;margin:0 auto" class="pr">
+			<div class="clearfix pr">
+				<div class="topstyle">
+					<ul id="tips">
+					</ul>
+					<ul style="float: right" id="buttons">
+					</ul>
+				</div>
+				<div class="clearfix"></div>
+				<a class="new-header-logo fl" href="index.html"></a>
+				<div class="new-header-srch fl">
+					<a href="test.html" target="_blank"><span id="nlp-srch-btn"></span></a><input style="height:15px;border:3px solid #002A56;background-color:#fff" id="header-srch" type="text" class="bul2 fl" placeholder="输入关键词搜索" value="" maxlength="50"/>
+					<span class="header-srch-type db dn c_999" data-header-type><span>服务</span><i class="ml5 caret caret-down caret-b-9b"></i></span>
+					<ul class="new-header-dropdown-list header-srch-type-list dn" data-header-type-list>
+						<li class="header-dropdown-item tc cur-hand active">服务</li>
+						<li class="header-dropdown-item tc cur-hand ">服务商</li>
+					</ul>
+					<span id="header-srch-btn"></span>
+
+					<ul class="new-header-srch-recommend dn" data-srch-recom>
+					</ul>
+				</div>
+			</div>
+			<!--搜索候选
+            <div class="hot-recom">
+            <a id="header-srch-0" href="#" target="_blank">海冰预警</a>
+            <a id="header-srch-1" href="#" target="_blank">矿物勘探</a>
+            <a id="header-srch-2" href="#" target="_blank">农作物估产</a>
+            <a id="header-srch-3" href="#" target="_blank">森林资源调查</a>
+            <a id="header-srch-4" href="#" target="_blank">绿潮预警</a>
+            <a id="header-srch-5" href="#" target="_blank">灾害预报检测</a>
+            </div>
+            -->
+		</div>
+	</div>
+		<section class="content-wrap h-wrap">
+            <div class="position fs14 c_999 zl ">
+                <span class="c_999 fws"><img src="images/index.png" style="margin-right: -5px"> <a href="javascript:;"></a></span>
+                <span><a href="index.html" class="pos-on">服务网格</a></span>
+                <span class="song">&gt;</span> <span id="tl">天气服务</span>
+            </div>
+			<div class="tag-list mb10 pr">
+				<span class="all-tag">标&nbsp;&nbsp&nbsp;&nbsp;签 :</span>
+				<!--<span class="fold-btn"><i></i></span>-->
+				<div class="tags" id="tags" style="height: 30px;"></div>
+			</div>
+			<div class="sort-div clearfix" style="position: relative;">
+				<ul class="list-style fl">
+					<li>
+						<div class="txt">排序方式:</div>
+						<div class="choice" id="sort-style">
+							<div class="txt" >添加时间：&nbsp;&nbsp;</div>
+							<span  id="query_time_asc" data-type="1"  class="sortWay" >升序</span>
+							<span  id="query_time_desc" data-type="2" class="sortWay">降序</span>
+						</div>
+					</li>
+					<li>
+						<div class="txt">评分 :</div>
+						<div class="choice" id="sort-style" style="margin-left: 15px;" >
+							<span id="query_score_asc" data-type="3" class="sortWay">由高到低</span>
+							<span id="query_score_desc" data-type="4" class="sortWay">由低到高</span>
+						</div>
+					</li>
+				</ul>
+				<p></p>
+			</div>
+			<div id="listTab">
+				<style>
+					a>img
+					{
+						width: 100%;
+						border-radius: 5px 5px 0px 0px;
+						margin: 0 auto;
+					}
+				</style>
+				<ul class="new-list-v1 pr clearfix homeList" style="width: 1216px" id="UL"></ul>
+				<span class="async-page">
+					<div class="script-page-parentor zl clearfix">
+						<div class="fr">
+							<div class="page page_v1"  id="pageWapper" >
+								
+							<div id="abc" class="pagination"></div>
+							<div id="hiddenresult" style="display:none;"></div></div>
+                        </div>
+                    </div>
+                </span>
+			</div>
+		</section>
+		<!--<footer class="g-footer">
+			<div class="wrap ">
+				<dl>
+					<dt class="i51"></dt>
+					<dt>APIStore</dt>
+					<dd>
+						<a href="javascript:;">关于我们</a>
+					</dd>
+					<dd>
+						<a href="javascript:;">加入我们</a>
+					</dd>
+					<dd>
+						<a href="javascript:;">服务条款</a>
+					</dd>
+					<dd>
+						<a href="javascript:;">友情链接</a>
+					</dd>
+					<dd>
+						<a href="javascript:;">平台动态</a>
+					</dd>
+					<dd>
+						<a href="javascript:;">常见问题</a>
+					</dd>
+				</dl>
+				<dl>
+					<dt class="i52"></dt>
+					<dt>联系我们</dt>
+					<dd>
+						<a href="javascript:;">商务合作：1438807181</a>
+					</dd>
+					<dd><a href="javascript:;">客服邮箱： gaofen@zju_edu.cn</a></dd>
+					<dd>
+						<a href="javascript:;">交流QQ群：461037085</a>
+					</dd>
+				
+				</dl>
+				<dl>
+					<dt class="i53"></dt>
+					<dt>关注我们</dt>
+					<dd>
+						<a href="javascript:;">论坛：</a>
+					</dd>
+					<dd>
+						<a href="javascript:;">APIStore论坛</a>
+					</dd>
+					<dd>
+						<a href="javascript:;">微博：</a>
+					</dd>
+						<dd>
+						<a href="javascript:;">APIStore微博</a>
+					</dd>
+					<dd>
+						<a href="javascript:;">微信：</a>
+					</dd>
+					<dd>
+						<a href="javascript:;">APIStore微信</a>
+					</dd>
+				</dl>
+				<div class="erweima">
+					<p>关注官方微信，了解最新资讯</p>
+					<img  src="images/wechat_0ebaf26.png" alt="高分中心" />
+				</div>
+			</div>
+		</footer>-->
+	</body>
+</html>

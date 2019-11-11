@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>高分中心数据集市</title>
+    <meta name="keywords" content="API数据接口_免费API数据_API数据查找_数据调用">
+    <meta name="description" content="向开发者提供国内外最全的金融数据、电商数据、运营商数据、生活服务数据、应用开发数据、质检数据等接口。">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link href="css/common.css" type="text/css" rel="stylesheet" />
+    <link href="css/base_680b3b8.css" type="text/css" rel="stylesheet" />
+    <link href="css/pagination.css"/>
+    <script src="js/jquery-1.11.1.min.js" ></script>
+    <script src="js/echarts.js" ></script>
+</head>
+<body class="bg-White body " style="background-color: rgba(242,244,255,0.5)">
+<div style="position:relative;width: 100%;margin: 0 auto">
+
+    <div id="main" style="width:1200px;height:700px;margin: 0 auto"></div>
+</div>
+
+</body>
+<script>
+
+var myChart = echarts.init(document.getElementById('main'));
+var plantCap = [];//类别id和数据
+//下面存储坐标
+var datalist = [
+    {
+        offset: [60,50],
+        symbolSize: 84,
+        opacity: .95,
+        fontSize: '18'
+    },{
+        offset: [50,55],
+        symbolSize: 80,
+        opacity: .88,
+        fontSize: '17.1'
+    },{
+        offset: [65,43],
+        symbolSize: 71,
+        opacity: .84,
+        fontSize: '15.2'
+    },{
+        offset: [56,57],
+        symbolSize: 60,
+        opacity: .8,
+        fontSize: '12.85'
+    },{
+        offset: [64,57],
+        symbolSize: 58,
+        opacity: .75,
+        fontSize: '12.43'
+    },{
+        offset: [54,48],
+        symbolSize: 55,
+        opacity: .7,
+        fontSize: '11.8'
+    },{
+        offset: [66,47.5],
+        symbolSize: 50,
+        opacity: .68,
+        fontSize: '10.7'
+    },{
+        offset: [52,55],
+        symbolSize: 40,
+        opacity: .6,
+        fontSize: '8.57'
+    },{
+        offset: [60,42],
+        symbolSize: 40,
+        opacity: .6,
+        fontSize: '10'
+    },{
+        offset: [51,46],
+        symbolSize: 35,
+        opacity: .58,
+        fontSize: '10'
+    },{
+        offset: [69,47],
+        symbolSize: 35,
+        opacity: .58,
+        fontSize: '10'
+    },{
+        offset: [60,57],
+        symbolSize: 30,
+        opacity: .56,
+        fontSize: '9'
+    },{
+        offset: [59,60],
+        symbolSize: 25,
+        opacity: .3,
+        fontSize: '8'
+    },{
+        offset: [55,62],
+        symbolSize: 25,
+        opacity: .3,
+        fontSize: '8'
+    },{
+        offset: [52,60],
+        symbolSize: 25,
+        opacity: .3,
+        fontSize: '8'
+    }
+];
+var dataseries=[];
+var datas = [];
+function formatwords(words) {
+    var len = words.length;
+    var str = "";
+    for(var i = 1;i<=len;i++)
+    {
+        str += words[i-1];
+        if(i%7 == 0&&i!=len)
+            str+="\n";
+    }
+    return str;
+}
+function showChart(type) {
+    myChart.clear();
+    for(var i= 0 ;i<plantCap.length&&i<datalist.length; i++){
+        var item = plantCap[i];
+        var itemToStyle = datalist[i];
+        datas[i] = new Array();
+        var size = 140-3*i;
+        if(size<100)
+            size  = 100;
+        datas[i].push({
+            name: formatwords(item.name),
+            value: itemToStyle.offset,
+            theid:parseInt(item.value),
+            intro:item.intro,
+            type:item.type,
+            symbolSize: size,
+            label: {
+                normal: {
+                    textStyle: {
+                        fontSize: 15
+                    }
+                },
+            },
+            itemStyle: {
+                normal: {
+                    opacity: 0.95
+                }
+            },
+        })
+        dataseries.push({
+            type: 'scatter',
+            symbol: 'circle',
+            symbolSize: 1200,
+            label: {
+                normal: {
+                    show: true,
+                    formatter: '{b}',
+                    color: '#fff',
+                    textStyle: {
+                        fontSize: '20'
+                    }
+                },
+
+            },
+            itemStyle: {
+                emphasis: {
+                    color: '#00acea',
+                    opacity: 1
+                }
+            },
+            data: datas[i]
+        })
+    }
+    if(type)
+        dataseries.push({
+            type: 'scatter',
+            symbol: 'image://../images/back.png',
+            symbolSize: 1200,
+            label: {
+                normal: {
+                    show: true,
+                    formatter: '{b}',
+                    color: '#fff',
+                    textStyle: {
+                        fontSize: '20'
+                    }
+                },
+
+            },
+            itemStyle: {
+                normal:{
+                  color:"blue"
+                },
+                emphasis: {
+                    color: '#00acea',
+                    opacity: 1
+                }
+            },
+            data: datas[i]
+        });
+    option = {title: {
+            text:'高分中心服务展示',
+            x:'center',
+            top:10,
+            bottom:15
+        },
+        backgroundColor: 'rgb(242,244,255)',
+        tooltip: {
+            trigger: 'item',
+            backgroundColor: '#fff',
+            textStyle: {
+                color: '#999'
+            },
+            formatter: (item) => {
+                if(type==0)
+                    return `服务类别：${item.data.name}`;
+                else
+                    return `${item.data.intro}`;
+            }
+        },
+        dataZoom: [
+            {
+                type: 'slider',
+                show: true,
+                xAxisIndex: [0],
+                start: 40,
+                end: 75
+            },
+            {
+                type: 'slider',
+                show: true,
+                yAxisIndex: [0],
+                left: '93%',
+                start: 41,
+                end: 58
+            },
+            {
+                type: 'inside',
+                xAxisIndex: [0],
+                start: 0,
+                end: 100
+            },
+            {
+                type: 'inside',
+                yAxisIndex: [0],
+                start: 0,
+                end: 100
+            }
+        ],
+        xAxis: [{
+            gridIndex: 0,
+            type: 'value',
+            show: false,
+            min: 0,
+            max: 100,
+            nameLocation: 'middle',
+            nameGap: 30
+        }],
+        yAxis: [{
+            gridIndex: 0,
+            min: 0,
+            show: false,
+            max: 100,
+            nameLocation: 'middle',
+            nameGap: 30,
+        }],
+        series:dataseries
+    };
+    myChart.setOption(option);
+}
+function showlist() {
+    $.get("http://api.cheosgrid.org:8077/serviceCategory/alllist.do", function(data){
+        var listItemData = data.data;
+        plantCap.splice(0,plantCap.length);
+        dataseries.splice(0,dataseries.length);
+        datas.splice(0,datas.length);
+        for(var k = 0 ; k < listItemData.length; k++ ){
+            plantCap.push({name:listItemData[k].categoryName,value:listItemData[k].id,type:0});
+        }
+        showChart(0);
+    });
+}
+showlist();
+$("#main").prepend(`    <div class="head c_fff" style="z-index: 10000;position: absolute">
+        <img src="images/575764859565483609.png" alt="logo" >
+    </div>`);
+myChart.on('click', function (params) {
+    if(params.data.type == 1)
+    {
+        window.open("detail.html?serviceId="+params.data.theid);
+    }
+    else if(params.data.type == 0)
+    {
+        $.get("http://api.cheosgrid.org:8077/service/list.do?orderBy=score_desc&category="+params.data.theid, function(data){
+            var listItemData = data.data.list;
+            plantCap.splice(0,plantCap.length);
+            dataseries.splice(0,dataseries.length);
+            datas.splice(0,datas.length);
+            for(var k = 0 ; k < listItemData.length&&k<datalist.length; k++ ){
+                plantCap.push({name:listItemData[k].serviceName,value:listItemData[k].serviceId,intro:listItemData[k].introduction,type:1});
+            }
+            datas[k] = new Array();
+            datas[k].push({
+                name: "",
+                intro:"返回上一层",
+                value: [45,45],
+                theid:0,
+                type:2,
+                symbolSize: 100,
+                label: {
+                    normal: {
+                        textStyle: {
+                            fontSize: 15
+                        }
+                    },
+                },
+                itemStyle: {
+                    normal: {
+                        opacity: 0.95
+                    }
+                },
+            });
+            showChart(1);
+        });
+    }
+    else
+    {
+        showlist();
+    }
+});
+
+</script>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Service Wrapper</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*"/>
+    <link href="../css/common.css" type="text/css" rel="stylesheet"/>
+    <link href="../css/base_680b3b8.css" type="text/css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="../css/header_5bd59f1.css"/>
+    <script src="../js/jquery-3.2.1(2).js"></script>
+    <!--<script src="../js/api/utils.js"></script>-->
+    <!--<script src="../js/api/search.js"></script>-->
+    <!--<script src="../js/naibowang/role.js"></script>-->
+    <script src="../js/jquery.cookie.js"></script>
+    <script src="../js/api/jquery.pagination.js"></script>
+    <!--bootstrap开始-->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!--bootstrap结束-->
+    <script src="js/vue.js"></script>
+</head>
+<style>
+    body {
+        font-size: 17px;
+    }
+</style>
+<body class="bg-White" style="min-width: 1280px;opacity: 0.9;background: #F4F4F4;">
+<div class="new-index-title" style="background-image: url(images/Group.png)" >
+    <div style="width:1080px;margin:0 auto;" class="pr">
+        <div class="clearfix pr">
+            <div class="topstyle">
+                <ul id="tips">
+                </ul>
+                <ul style="float: right" id="buttons">
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+            <a class="new-header-logo fl" href="index.html"></a>
+        </div>
+    </div>
+</div>
+<section class="wrap2" style="width:1031px">
+    <div class="card zl clearfix " style="padding-left: 70px;padding-right: 70px;">
+        <div id="app">
+            <h3>Web Page Segmentation</h3>
+            <div width="75%" align="center" style="padding-top: 20px">
+                <img :src="api_info.img_link" width="100%">
+            </div>
+            <h3 style="padding-top: 80px">Section chosen：</h3>
+
+            <div v-for="obj in main_sec_obj">
+                <form style="padding-top: 20px" class="form-inline">
+                    <div class="form-group ">
+                        <label for="sec_name">Section name</label>
+                        <input id="sec_name" type="text" class="form-control" style="margin-left: 10px;"
+                               v-model="api_info.candidate[obj.id].section_name">
+                    </div>
+                </form>
+                <select v-model="obj.id" class="custom-select" style="margin-top: 20px;">
+                    <option v-for="(item,index) in api_info.candidate" :value="index">{{index+1}}</option>
+                </select>
+
+
+                <div style="height: 200px;border: 1px solid #ddd;overflow: scroll;padding-top: 20px">
+                    <pre id="content">{{api_info.sections[obj.id]}}</pre>
+                </div>
+            </div>
+
+
+            <form>
+                <button @click="addMainSec" type="button" style="margin-top: 16px;" class="btn btn-success">Add Section</button>
+                <button @click="deleteMainSec" type="button" style="margin-top: 16px;" class="btn btn-danger">Delete Last Section
+                </button>
+                <button @click="next" type="button" style="margin-top: 16px;" class="btn btn-primary">Continue</button>
+            </form>
+        </div>
+    </div>
+</section>
+</body>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            api_info: {
+                api_name: "",
+                api_description: "",
+                api_url: "",
+                img_link: "",
+                json_link: "",
+                api_crawl_rules_link: "",//link address
+                main_sec_id: 0,
+                sections: [
+                    "111", "222",
+                ],
+                candidate: [
+                    [{
+                        items:
+                            {
+                                id: 0,
+                                name: 'text_1/link_1/img_1',//参数名
+                                description: 'default',  //参数解释
+                                type: 'text/link/img',
+                                example: '',   //示例值
+                                select: "1/0"  //是否选择此值
+                            },
+                        section_name:""
+                    }
+                    ]
+                ]
+            },
+            main_sec_obj: [{id: 0}],
+        },
+        methods: {
+            getUrlParam() {
+                let name="api_url";
+                let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                let index = window.location.search.indexOf("=");
+
+                return window.location.search.substring(index+1);
+            },
+            next() {
+                sessionStorage.setItem("api_info" + this.getUrlParam(), JSON.stringify(this.api_info))
+                window.location.href = "newPackage.html?api_url=" + this.api_info.api_url;
+            },
+            addMainSec() {
+                this.main_sec_obj.push({id: 0});
+            },
+            deleteMainSec() {
+                this.main_sec_obj.pop();
+            }
+        },
+        created() {
+            console.log('url_param', this.getUrlParam());
+            this.api_info = JSON.parse(sessionStorage.getItem("api_info" + this.getUrlParam()));
+            this.main_sec_obj = this.api_info.main_sec_id.map((value) => ({id: value}));
+            console.log(this.api_info);
+            console.log('main_sec_objs', this.main_sec_obj);
+        },
+        watch: {
+            main_sec_obj: {
+                deep:true,
+                handler:function () {
+                this.api_info.main_sec_id = this.main_sec_obj.map((value) => value.id);
+            }}
+        }
+    })
+</script>
+</html>

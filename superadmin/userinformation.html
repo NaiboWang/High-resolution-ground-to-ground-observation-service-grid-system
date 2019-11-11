@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8" /><link rel="stylesheet" type="text/css" href="../css/newcss.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template" />
+<meta name="author" content="GeeksLabs" />
+<meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal" />
+
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script src="../js/jquery.cookie.js"></script>
+<script src="../js/naibowang/superUrlParam.js"></script>
+<script src="../js/naibowang/service.js"></script>
+<script src="js/addel.jquery.js"></script>
+<title>用户信息查看</title>
+<!-- Bootstrap CSS -->
+<link href="css/bootstrap.min.css" rel="stylesheet" />
+<!-- bootstrap theme -->
+<link href="css/bootstrap-theme.css" rel="stylesheet" />
+<!--external css-->
+<!-- font icon -->
+<link href="css/elegant-icons-style.css" rel="stylesheet" />
+<link href="css/font-awesome.min.css" rel="stylesheet" />
+<!-- full calendar css-->
+<link href="assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet" />
+<link href="assets/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet" />
+<!-- easy pie chart-->
+<link href="assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen" />
+<!-- owl carousel -->
+<link rel="stylesheet" href="css/owl.carousel.css" type="text/css" />
+<link href="css/jquery-jvectormap-1.2.2.css" rel="stylesheet" />
+<!-- Custom styles -->
+<link rel="stylesheet" href="css/fullcalendar.css" />
+<link href="css/widgets.css" rel="stylesheet" />
+<link href="css/style.css" rel="stylesheet" />
+<link href="css/style-responsive.css" rel="stylesheet" />
+<link href="css/xcharts.min.css" rel=" stylesheet" />
+<link href="css/jquery-ui-1.10.4.min.css" rel="stylesheet" />
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 -->
+<!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+      <script src="js/lte-ie7.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- container section start -->
+<section id="container" class="">
+  <header class="header dark-bg">
+    <div class="toggle-nav">
+      <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"></div>
+    </div>
+    <!--logo start--> 
+    <img class='gflogo' src="../images/api-logo_95fb06f.png"/>
+    <!--logo end-->
+    <div class="top-nav notification-row"> 
+      <!-- notificatoin dropdown start-->
+      <ul class="nav pull-right top-menu">
+        <li id="usname" style="line-height: 30px"></li>
+        <li>
+          <button class="btn btn-default" id="logout">注销</button>
+        </li>
+        <!-- user login dropdown end -->
+      </ul>
+      <!-- notificatoin dropdown end--> 
+    </div>
+  </header>
+ <aside>
+    <div id="sidebar"  class="nav-collapse "> 
+      <!-- sidebar menu start-->
+       <ul class="sidebar-menu">
+        <li class="active"> <a class="" href="index.html"> <i class="icon_house_alt"></i> <span>用户管理</span> </a> </li>
+        
+      </ul>
+      <!-- sidebar menu end--> 
+    </div>
+  </aside>
+ 
+  <section id="main-content">
+    <section class="wrapper"> 
+      <!--overview start-->
+      <div class="row">
+        <div class="col-lg-12">
+          <h3 class="page-header"><i class="fa fa-laptop"></i>用户管理</h3>
+          <ol class="breadcrumb">
+            <li><i class="fa fa-home"></i><a href="index.html">主页</a></li>
+			  <li><i class="fa fa-laptop"></i><a href="" id="serviceplat">用户管理</a></li>
+            <li><i class="fa fa-edit"></i>用户信息查看</li>
+          </ol>
+        </div>
+      </div>
+              <script>
+		var sid = getUrlParam("pnum");
+		if(sid==null || sid =="")
+			sid="1";
+		$("#serviceplat").attr("href","index.html?pnum="+sid);
+		</script>
+      <div class="table-responsive">
+        <form class="form-control" enctype="multipart/form-data" id="theform" method="post" onsubmit="return addcheck(0)" style="height: 100%">
+          <h4 id="title" align="center">用户信息查看 </h4>
+          <div class="input-group"> <span class="input-group-addon">用户名：</span>
+            <input type="text" name="serviceName" id="serviceName"  class="form-control" required aria-describedby="basic-addon1" />
+          </div>
+          <p></p>
+          <div class="input-group"> <span class="input-group-addon">电话：</span> <input type="text" class="form-control" required id="phone" aria-describedby="basic-addon1" value="" />
+          </div>
+          <p></p>
+          <div class="input-group"> <span class="input-group-addon">电子邮件：</span><input type="text" class="form-control" required id="email" aria-describedby="basic-addon1" value="" />
+           
+          </div>
+          <p></p>
+          <div class="input-group"> <span class="input-group-addon">所属角色：</span>
+            <input type="text" class="form-control" required name="introduction" id="introduction" aria-describedby="basic-addon1" value="" />
+          </div>
+          <p></p>
+          <div class="input-group"> <span class="input-group-addon">审核状态：</span>
+            <input type="text" class="form-control" id="checked" aria-describedby="basic-addon1" value="" />
+          </div>
+          <p></p>
+          <div class="input-group"> <span class="input-group-addon">审核回复：</span>
+            <textarea class="form-control" required id="remarks" name="callExample" rows="3"></textarea>
+          </div>
+          <p></p>
+          <p align="center" style="margin-top: 10px">&nbsp;</p>
+          <table class="table table-striped">
+            <style>
+						   td,th{
+							   text-align: center;
+							   width: 10px;
+							   table-layout:fixed;
+						   }
+							   .input-group-addon
+							 {
+								 width:100px;
+								 text-align: right;
+							 }
+							 .input-group
+							 {
+								 width:100%;
+							 }
+							 .tablestyle td,.tablestyle th
+							 {
+								 max-width: 20px;
+								 text-overflow: ellipsis;
+								 overflow: hidden;
+								 white-space:nowrap;
+							 }
+							</style>
+          </table>
+        </form>
+        <script>
+		  $(document).ready(function () {
+			  var sid = getUrlParam("id");
+			if(sid==null || sid =="")
+				window.location.href="index.html";
+			  var link = server+"/user/manage/search.do?userId="+getUrlParam("id");
+			$.get(link,function(result){
+					if(result.status)
+					{
+						alert(result.msg);
+						window.location.href="index.html";
+						return;
+					}
+						$("#serviceName").val(result.data.username);
+						$("#phone").val(result.data.phone);
+						$("#email").val(result.data.email);
+						$("#introduction").val(result.data.role);
+                $("#remarks").val(result.data.remarks);
+				if(result.data.checked==0)
+							$("#checked").val("正常");
+						else if(result.data.checked == 2)
+							$("#checked").val("未通过审核");
+				else
+					$("#checked").val("未审核");
+			});
+		  });
+	</script> 
+      </div>
+      <!--/row-->
+      <div> </div>
+    </section>
+  </section>
+  <!--main content end--> 
+</section>
+<!-- container section start --> 
+<script src="js/jquery-ui-1.10.4.min.js"></script> 
+<script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script> 
+<!-- bootstrap --> 
+<script src="js/bootstrap.min.js"></script> 
+<!-- nice scroll --> 
+<script src="js/jquery.scrollTo.min.js"></script> 
+<script src="js/jquery.nicescroll.js" type="text/javascript"></script> 
+<!-- charts scripts --> 
+<script src="assets/jquery-knob/js/jquery.knob.js"></script> 
+<script src="js/jquery.sparkline.js" type="text/javascript"></script> 
+<script src="assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js"></script> 
+<script src="js/owl.carousel.js"></script> 
+<!-- jQuery full calendar --> &lt; 
+<script src="js/fullcalendar.min.js"></script> 
+<!-- Full Google Calendar - Calendar --> 
+<script src="assets/fullcalendar/fullcalendar/fullcalendar.js"></script> 
+<!--script for this page only--> 
+<script src="js/calendar-custom.js"></script> 
+<script src="js/jquery.rateit.min.js"></script> 
+<!-- custom select --> 
+<script src="js/jquery.customSelect.min.js"></script> 
+<script src="assets/chart-master/Chart.js"></script> 
+<!--custome script for all page--> 
+<script src="js/scripts.js"></script> 
+<!-- custom script for this page--> 
+<script src="js/sparkline-chart.js"></script> 
+<script src="js/easy-pie-chart.js"></script> 
+<script src="js/jquery-jvectormap-1.2.2.min.js"></script> 
+<script src="js/jquery-jvectormap-world-mill-en.js"></script> 
+<script src="js/xcharts.min.js"></script> 
+<script src="js/jquery.autosize.min.js"></script> 
+<script src="js/jquery.placeholder.min.js"></script> 
+<script src="js/gdp-data.js"></script> 
+<script src="js/morris.min.js"></script> 
+<script src="js/sparklines.js"></script> 
+<script src="js/charts.js"></script> 
+<script src="js/jquery.slimscroll.min.js"></script>
+</body>
+</html>
